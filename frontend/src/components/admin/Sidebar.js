@@ -55,7 +55,7 @@ const Sidebar = () => {
                   </NavLink>
                   <NavLink
                     exact
-                    to="#"
+                    to="products"
                     activeClassName="activeClicked"
                     className="text-white"
                   >

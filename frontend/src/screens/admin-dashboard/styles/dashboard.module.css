@@ -5,15 +5,11 @@
 }
 
 .content {
-  padding: 2rem;
   flex: 1;
 }
 
 @media (min-width: 768px) {
   .dashboard {
     flex-direction: row;
-  }
-  .content {
-    padding: 2rem 4rem;
   }
 }
