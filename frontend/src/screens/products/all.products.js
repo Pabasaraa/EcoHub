@@ -15,96 +15,50 @@ const AllProducts = () => {
 
   const navigate = useNavigate();
 
-  const dummy = [
-    {
-      id: 1,
-      itemName: "Product 1",
-      itemPrice: 100,
-      itemDescription: "Product 1 description",
-      itemImages: [
-        {
-          data: "https://picsum.photos/200/300",
-        },
-      ],
-      userId: 1,
-      username: "Seller 1",
-    },
-    {
-      id: 2,
-      itemName: "Product 2",
-      itemPrice: 200,
-      itemDescription: "Product 2 description",
-      itemImages: [
-        {
-          data: "https://picsum.photos/200/300",
-        },
-      ],
-      userId: 2,
-      username: "Seller 2",
-    },
-    {
-      id: 3,
-      itemName: "Product 3",
-      itemPrice: 200,
-      itemDescription: "Product 3 description",
-      itemImages: [
-        {
-          data: "https://picsum.photos/200/300",
-        },
-      ],
-      userId: 3,
-      username: "Seller 3",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/products/get/all")
+      .then((res) => {
+        setProducts(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   useEffect(() => {
-    setProducts(dummy);
-  });
+    if (products) {
+      const buffers = products.map((product) => product.productImages[0].data);
+      setImageBuffers(buffers);
+    }
+  }, [products]);
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:8000/items/get/all")
-  //       .then((res) => {
-  //         setProducts(res.data.data);
-  //         console.log(res.data.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message);
-  //       });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (products) {
-  //       const buffers = products.map((product) => product.itemImages[0].data);
-  //       setImageBuffers(buffers);
-  //     }
-  //   }, [products]);
-
-  //   useEffect(() => {
-  //     const strings = imageBuffers.map((buffer) => {
-  //       const binary = Array.from(new Uint8Array(buffer))
-  //         .map((b) => String.fromCharCode(b))
-  //         .join("");
-  //       return `data:image/jpeg;base64,${btoa(binary)}`;
-  //     });
-  //     setBase64Strings(strings);
-  //   }, [imageBuffers]);
+  useEffect(() => {
+    const strings = imageBuffers.map((buffer) => {
+      const binary = Array.from(new Uint8Array(buffer))
+        .map((b) => String.fromCharCode(b))
+        .join("");
+      return `data:image/jpeg;base64,${btoa(binary)}`;
+    });
+    setBase64Strings(strings);
+  }, [imageBuffers]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const searchProducts = () => {
-    //   axios
-    //     .post("http://localhost:8000/items/search", {
-    //       searchTerm: searchTerm,
-    //     })
-    //     .then((res) => {
-    //       setProducts(res.data.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.message);
-    //     });
+    axios
+      .post("http://localhost:8000/products/search", {
+        searchTerm: searchTerm,
+      })
+      .then((res) => {
+        setProducts(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
@@ -129,33 +83,33 @@ const AllProducts = () => {
         </InputGroup>
         <h5>All Products:</h5>
         <br />
-        {products && base64Strings.length === 0 ? (
+        {products && base64Strings.length > 0 ? (
           <div className={styles.productGrid}>
             {products.map((product, key) => (
               <Card key={product.id} className={styles.productCard}>
                 <Card.Img
                   variant="top"
-                  src={product.itemImages[0].data}
+                  src={base64Strings[key]}
                   className={styles.productIms}
                 />
                 <Card.Body>
                   <Card.Title style={{ fontSize: "1.1rem" }}>
-                    {product.itemName}
+                    {product.productName}
                   </Card.Title>
                   <Card.Text style={{ marginTop: "-10px" }}>
                     <Button
                       variant="link"
-                      onClick={() => navigate(`/sellers/${product.userId}`)}
+                      onClick={() => navigate(`/sellers/${product.adminId}`)}
                       style={{ padding: "0", textDecoration: "none" }}
                     >
-                      <small className="text-muted">{product.username}</small>
+                      <small className="text-muted">{product.adminId}</small>
                     </Button>
                   </Card.Text>
                   <Card.Text
                     className={`
                     text-success ${styles.productPrice}`}
                   >
-                    {product.itemPrice} LKR
+                    {product.productPrice} LKR
                   </Card.Text>
                   <hr style={{ opacity: "0.15", marginBottom: "25px" }} />
                   <Button

@@ -17,10 +17,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 
-app.use("/", (res) => {
-  res.send("EcoHub backend service!");
-});
-
 // Use routes
 app.use("/products", productRoutes);
 

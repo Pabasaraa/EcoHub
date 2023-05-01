@@ -5,28 +5,28 @@ import ProductValidation from "../services/validation.service.js";
 
 const createProduct = async (req, res) => {
   try {
-    // Check if the admin has logged in if not throw an err
-    if (!req.body.token) {
-      throw new Error("No token provided!");
-    }
+    // Uncomment this code when the authentication service is ready
 
-    // Get the admin's ID from the token and add it to the request body
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/users/validatetoken",
-        {},
-        {
-          headers: {
-            "x-access-token": req.body.token,
-          },
-        }
-      );
+    // if (!req.body.token) {
+    //   throw new Error("No token provided!");
+    // }
 
-      req.body.role = response.data.data.role;
-      req.body.adminId = response.data.data._id;
-    } catch (error) {
-      throw new Error("Error while getting the user ID: " + error);
-    }
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:8000/users/validatetoken",
+    //     {},
+    //     {
+    //       headers: {
+    //         "x-access-token": req.body.token,
+    //       },
+    //     }
+    //   );
+
+    //   req.body.role = response.data.data.role;
+    //   req.body.adminId = response.data.data._id;
+    // } catch (error) {
+    //   throw new Error("Error while getting the user ID: " + error);
+    // }
 
     if (req.body.role !== "admin") {
       throw new Error("You are not authorized to add products!");
