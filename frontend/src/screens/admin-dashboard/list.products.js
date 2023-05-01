@@ -136,8 +136,8 @@ const ListProducts = () => {
                     <td>
                       <p className="fw-normal mb-1">
                         {product.productDescription &&
-                        product.productDescription.length > 100
-                          ? product.productDescription.slice(0, 100) + "..."
+                        product.productDescription.length > 180
+                          ? product.productDescription.slice(0, 180) + "..."
                           : product.productDescription}
                       </p>
                     </td>
@@ -147,7 +147,7 @@ const ListProducts = () => {
                         color="link"
                         rounded
                         size="sm"
-                        onClick={() => navigate(`/dashboard/${product._id}`)}
+                        onClick={() => navigate(`update/${product._id}`)}
                       >
                         Edit
                       </MDBBtn>

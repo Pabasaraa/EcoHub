@@ -7,6 +7,7 @@ import styles from "./styles/dashboard.module.css";
 
 import AddProducts from "./add.product.js";
 import ListProducts from "./list.products.js";
+import UpdateProduct from "./update.product.js";
 
 const Dashboard = () => {
   return (
@@ -18,6 +19,7 @@ const Dashboard = () => {
           <Route path="/" element={<h1>Welcome to the Dashboard</h1>} />
           <Route path="products/add" element={<AddProducts />} />
           <Route path="products" element={<ListProducts />} />
+          <Route path="products/update/:id" element={<UpdateProduct />} />
         </Routes>
       </Container>
     </div>

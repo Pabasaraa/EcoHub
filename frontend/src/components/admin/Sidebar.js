@@ -88,7 +88,9 @@ const Sidebar = () => {
                 alert("logged out");
               }}
             >
-              Logout
+              <CDBSidebarMenuItem icon="sign-out-alt">
+                Sign out
+              </CDBSidebarMenuItem>
             </Link>
           </div>
         </CDBSidebarFooter>
