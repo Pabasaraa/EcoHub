@@ -143,31 +143,28 @@ const searchProductsByTerm = async (req, res) => {
 
 const updateProductById = async (req, res) => {
   try {
-    if (!req.body.token) {
-      throw new Error("No token provided!");
-    }
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/users/validatetoken",
-        {},
-        {
-          headers: {
-            "x-access-token": req.body.token,
-          },
-        }
-      );
-      req.body.userId = response.data.data._id;
-    } catch (error) {
-      throw new Error("Error while getting the user ID: " + error);
-    }
+    // Uncomment this code when the authentication service is ready
 
-    const itemNeedsToUpdate = await productService.getProductsById(
-      req.params.id
-    );
+    // if (!req.body.token) {
+    //   throw new Error("No token provided!");
+    // }
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:8000/users/validatetoken",
+    //     {},
+    //     {
+    //       headers: {
+    //         "x-access-token": req.body.token,
+    //       },
+    //     }
+    //   );
+    //   req.body.userId = response.data.data._id;
+    // } catch (error) {
+    //   throw new Error("Error while getting the user ID: " + error);
+    // }
 
-    // Check if the user is the owner of the item before updating it
-    if (itemNeedsToUpdate.userId !== req.body.userId) {
-      throw new Error("You are not the owner of this Product!");
+    if (req.body.role !== "admin") {
+      throw new Error("You are not authorized to add products!");
     }
 
     const item = new ProductValidation(req);
