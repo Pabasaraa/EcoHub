@@ -1,129 +1,175 @@
 import axios from "axios";
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
+import { Card, Button, FormControl, InputGroup } from "react-bootstrap";
 
-class ListProducts extends Component {
-  constructor(props) {
-    super(props);
+import styles from "./styles/list.products.module.css";
 
-    this.state = {
-      items: [],
-    };
-  }
+import Loader from "../../components/common/spinner";
 
-  componentDidMount() {
-    console.log("running");
-    this.retrieveItems();
-  }
+const ListProducts = () => {
+  const [items, setItems] = useState([]);
+  const [imageBuffers, setImageBuffers] = useState([]);
+  const [base64Strings, setBase64Strings] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  retrieveItems() {
-    axios.get(`http://localhost:8000/products/get/all`).then((res) => {
-      console.log(res.data.data);
-      if (res.data.data) {
-        this.setState({ items: res.data.data });
-      }
+  const navigate = useNavigate();
+
+  const retrieveItems = () => {
+    axios
+      .get(`http://localhost:8000/products/get/all`)
+      .then((res) => {
+        setItems(res.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    retrieveItems();
+  }, []);
+
+  useEffect(() => {
+    if (items) {
+      const buffers = items.map((product) => product.productImages[0].data);
+      setImageBuffers(buffers);
+    }
+  }, [items]);
+
+  useEffect(() => {
+    const strings = imageBuffers.map((buffer) => {
+      const binary = Array.from(new Uint8Array(buffer))
+        .map((b) => String.fromCharCode(b))
+        .join("");
+      return `data:image/jpeg;base64,${btoa(binary)}`;
     });
-  }
+    setBase64Strings(strings);
+  }, [imageBuffers]);
 
-  onDelete = (id) => {
+  const onDelete = (id) => {
     axios.delete(`http://localhost:8000/products/delete/${id}`).then(() => {
       alert("Delete Successfully");
       this.retrieveItems();
     });
   };
 
-  filterData(items, searchKey) {
-    const result = items.filter(
-      (items) =>
-        items.name.toLowerCase().includes(searchKey) ||
-        items.email.toLowerCase().includes(searchKey)
-    );
-
-    this.setState({ items: result });
-  }
-
-  handleSearchArea = (e) => {
-    const searchKey = e.currentTarget.value;
-
-    axios.get("http://localhost:8000/items/search").then((res) => {
-      if (res.data) {
-        this.filterData(res.data, searchKey);
-      }
-    });
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
-  render() {
-    return (
+  const searchProducts = () => {
+    setItems([]);
+    axios
+      .post("http://localhost:8000/products/search", {
+        searchTerm: searchTerm,
+      })
+      .then((res) => {
+        setItems(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  return (
+    <>
       <div className="container">
-        <u>
-          <h2 className="h-tag">
-            <i class="fa-solid fa-list"></i> List of items
-          </h2>
-        </u>
+        <h2 className="text-center mt-5 mb-3">List of items</h2>
 
-        <div class="Search-bar">
-          <form class="Search-form">
-            <input
-              class="Input-data"
-              type="search"
-              placeholder="Search"
-              name="searchQuery"
-              aria-label="Search"
-              onChange={this.handleSearchArea}
-            />
-          </form>
-        </div>
+        <InputGroup className={styles.searchBar}>
+          <FormControl
+            className={styles.searchInput}
+            placeholder="Search products"
+            aria-label="Search products"
+            aria-describedby="basic-addon2"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <Button
+            variant="outline-secondary"
+            className={styles.searchBtn}
+            onClick={searchProducts}
+          >
+            Search
+          </Button>
+        </InputGroup>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">userId</th>
-              <th scope="col">username</th>
-              <th scope="col">itemName</th>
-              <th scope="col">itemDescription</th>
-              <th scope="col">itemPrice</th>
-              <th scope="col">itemImages</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.items &&
-              this.state.items.map((product, index) => (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{product.adminId}</td>
-                  <td>{product.username}</td>
-                  <td>{product.productName}</td>
-                  <td>
-                    {" "}
-                    {product.productDescription &&
-                    product.productDescription.length > 100
-                      ? product.productDescription.slice(0, 100) + "..."
-                      : product.productDescription}
-                  </td>
-                  <td>{product.productPrice}</td>
-
-                  <td>
-                    <a
-                      className="btn btn-warning"
-                      href={`/dashboard/${product._id}`}
-                    >
-                      <i className="fas fa-edit"></i>&nbsp; Edit
-                    </a>
-                    &nbsp;
-                    <a
-                      className="btn btn-danger"
-                      onClick={() => this.onDelete(product._id)}
-                    >
-                      <i className="far fa-trash-alt"></i>&nbsp; Delete
-                    </a>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {items.length > 0 && base64Strings ? (
+          <MDBTable align="middle">
+            <MDBTableHead>
+              <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </MDBTableHead>
+            <MDBTableBody>
+              {items &&
+                base64Strings &&
+                items.map((product, key) => (
+                  <tr>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <img
+                          src={base64Strings[key]}
+                          alt="Product"
+                          className={`img-fluid rounded`}
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <div className="ms-3">
+                          <p className="fw-bold mb-1">{product.productName}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p className="fw-normal mb-1">
+                        {product.productDescription &&
+                        product.productDescription.length > 100
+                          ? product.productDescription.slice(0, 100) + "..."
+                          : product.productDescription}
+                      </p>
+                    </td>
+                    <td>{product.productPrice}/=</td>
+                    <td>
+                      <MDBBtn
+                        color="link"
+                        rounded
+                        size="sm"
+                        onClick={() => navigate(`/dashboard/${product._id}`)}
+                      >
+                        Edit
+                      </MDBBtn>
+                      <MDBBtn
+                        color="link"
+                        rounded
+                        size="sm"
+                        onClick={() => onDelete(product._id)}
+                      >
+                        Delete
+                      </MDBBtn>
+                    </td>
+                  </tr>
+                ))}
+            </MDBTableBody>
+          </MDBTable>
+        ) : (
+          <Loader />
+        )}
       </div>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default ListProducts;
