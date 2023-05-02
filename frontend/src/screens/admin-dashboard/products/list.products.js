@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
-import { Card, Button, FormControl, InputGroup } from "react-bootstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 
 import styles from "./styles/list.products.module.css";
 
-import Loader from "../../components/common/spinner";
+import Loader from "../../../components/common/spinner";
 
 const ListProducts = () => {
   const [items, setItems] = useState([]);
@@ -128,9 +128,7 @@ const ListProducts = () => {
                     </td>
                     <td>
                       <div className="d-flex align-items-center">
-                        <div className="ms-3">
-                          <p className="fw-bold mb-1">{product.productName}</p>
-                        </div>
+                        <p className="fw-normal mb-1">{product.productName}</p>
                       </div>
                     </td>
                     <td>

@@ -70,7 +70,7 @@ const createOrder = async (req, res) => {
   }
 };
 
-const getAllOrders = async (res) => {
+const getAllOrders = async (req, res) => {
   try {
     const orders = await orderService.getAllOrders();
 
@@ -80,7 +80,10 @@ const getAllOrders = async (res) => {
       data: orders,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
 

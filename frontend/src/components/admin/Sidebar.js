@@ -11,9 +11,19 @@ import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const [showProductsDropdown, setShowProductsDropdown] = useState(false);
+  const [showSeminarsDropdown, setShowSeminarsDropdown] = useState(false);
+  const [showArticlesDropdown, setShowArticlesDropdown] = useState(false);
 
   const handleProductsDropdown = () => {
     setShowProductsDropdown(!showProductsDropdown);
+  };
+
+  const handleSeminarsDropdown = () => {
+    setShowSeminarsDropdown(!showSeminarsDropdown);
+  };
+
+  const handleArticlesDropdown = () => {
+    setShowArticlesDropdown(!showArticlesDropdown);
   };
 
   return (
@@ -66,7 +76,81 @@ const Sidebar = () => {
                 </div>
               )}
             </div>
-            <NavLink exact to="#" activeClassName="activeClicked">
+            <div onClick={handleSeminarsDropdown}>
+              <CDBSidebarMenuItem icon="box">
+                Seminars
+                <i
+                  style={{ marginLeft: "5px" }}
+                  className={
+                    showSeminarsDropdown
+                      ? "fa fa-caret-down"
+                      : "fa fa-caret-right"
+                  }
+                ></i>
+              </CDBSidebarMenuItem>
+              {showSeminarsDropdown && (
+                <div style={{ marginLeft: 20 }}>
+                  <NavLink
+                    exact
+                    to="#"
+                    activeClassName="activeClicked"
+                    className="text-white"
+                  >
+                    <CDBSidebarMenuItem icon="box-open">
+                      Schedule Seminar
+                    </CDBSidebarMenuItem>
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to="#"
+                    activeClassName="activeClicked"
+                    className="text-white"
+                  >
+                    <CDBSidebarMenuItem icon="boxes">
+                      All Seminars
+                    </CDBSidebarMenuItem>
+                  </NavLink>
+                </div>
+              )}
+            </div>
+            <div onClick={handleArticlesDropdown}>
+              <CDBSidebarMenuItem icon="book">
+                Articles
+                <i
+                  style={{ marginLeft: "5px" }}
+                  className={
+                    showArticlesDropdown
+                      ? "fa fa-caret-down"
+                      : "fa fa-caret-right"
+                  }
+                ></i>
+              </CDBSidebarMenuItem>
+              {showArticlesDropdown && (
+                <div style={{ marginLeft: 20 }}>
+                  <NavLink
+                    exact
+                    to="#"
+                    activeClassName="activeClicked"
+                    className="text-white"
+                  >
+                    <CDBSidebarMenuItem icon="box-open">
+                      Create Article
+                    </CDBSidebarMenuItem>
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to="#"
+                    activeClassName="activeClicked"
+                    className="text-white"
+                  >
+                    <CDBSidebarMenuItem icon="boxes">
+                      All Articles
+                    </CDBSidebarMenuItem>
+                  </NavLink>
+                </div>
+              )}
+            </div>
+            <NavLink exact to="orders" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="book-open">Orders</CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="#" activeClassName="activeClicked">
