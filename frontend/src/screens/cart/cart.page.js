@@ -16,64 +16,23 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const cartItems = JSON.parse(localStorage.getItem("cartItems"));
-
-    const cartItems = [
-      {
-        id: 1,
-        itemName: "Product 1",
-        itemPrice: 100,
-        itemQuantity: 5,
-        itemImages: [
-          {
-            data: "https://picsum.photos/200/300",
-          },
-        ],
-        userId: 1,
-        username: "Seller 1",
-      },
-      {
-        id: 2,
-        itemName: "Product 2",
-        itemPrice: 200,
-        itemQuantity: 5,
-        itemImages: [
-          {
-            data: "https://picsum.photos/200/300",
-          },
-        ],
-        userId: 2,
-        username: "Seller 2",
-      },
-      {
-        id: 3,
-        itemName: "Product 3",
-        itemPrice: 200,
-        itemQuantity: 5,
-        itemImages: [
-          {
-            data: "https://picsum.photos/200/300",
-          },
-        ],
-        userId: 3,
-        username: "Seller 3",
-      },
-    ];
+    const cartItems = JSON.parse(localStorage.getItem("cartItems"));
 
     if (cartItems) {
       setCartItems(cartItems);
+      console.log(cartItems);
     }
-  }, []);
+  }, [localStorage.getItem("cartItems")]);
 
   const handleShippingMethodChange = (event) => {
     setShippingMethod(event.target.value);
   };
 
   function removeItem(itemName) {
-    // const cartItems = JSON.parse(localStorage.getItem("cartItems"));
-    // const newCartItems = cartItems.filter((item) => item.itemName !== itemName);
-    // localStorage.setItem("cartItems", JSON.stringify(newCartItems));
-    // setCartItems(newCartItems);
+    const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+    const newCartItems = cartItems.filter((item) => item.itemName !== itemName);
+    localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+    setCartItems(newCartItems);
   }
 
   const itemsTotal = cartItems
@@ -130,10 +89,7 @@ const Cart = () => {
             >
               <Row>
                 <Col xs={12} md={4}>
-                  <Card.Img
-                    src={product.itemImages[0].data}
-                    alt={product.itemName}
-                  />
+                  <Card.Img src={product.itemImage} alt={product.itemName} />
                 </Col>
                 <Col xs={12} md={8}>
                   <Card.Body>

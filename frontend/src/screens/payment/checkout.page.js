@@ -43,23 +43,23 @@ const Checkout = () => {
 
     const orderData = {
       token: localStorage.getItem("token"),
+      customerName: paymentDetails.customerName,
+      customerId: paymentDetails.customerId,
       customerAddress: customerAddress,
-      orderedItems: cartItems,
+      orderedProducts: cartItems,
       totalPrice: transactionDetails.totalPrice,
       shippingOption: transactionDetails.shippingOption,
     };
 
     alert("Order places!");
 
-    // await axios.post("http://localhost:8000/orders/new", orderData).then(() => {
-    //   localStorage.removeItem("cartItems");
-    //   localStorage.removeItem("transactionDetails");
+    await axios.post("http://localhost:8000/orders/new", orderData).then(() => {
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("transactionDetails");
 
-    //   //TODO: Add an alert to show the user that the order has been placed successfully and send an email to the user
-
-    //   alert("Order Placed Successfully");
-    //   navigate("/products");
-    // });
+      alert("Order Placed Successfully");
+      navigate("/products");
+    });
   };
 
   return (
@@ -88,6 +88,48 @@ const Checkout = () => {
                       placeholder="Full Name"
                       onChange={(e) => {
                         paymentDetails.cardHolder = e.target.value;
+                      }}
+                      style={{ paddingLeft: "15px" }}
+                    />
+                  </div>
+                </div>
+                <div className="row" style={{ marginTop: "15px" }}>
+                  <div className="form-group">
+                    <label
+                      className={styles.label}
+                      style={{ marginBottom: "10px" }}
+                    >
+                      User ID
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputCard"
+                      pattern="\d*"
+                      placeholder="User ID"
+                      onChange={(e) => {
+                        paymentDetails.customerId = e.target.value;
+                      }}
+                      style={{ paddingLeft: "15px" }}
+                    />
+                  </div>
+                </div>
+                <div className="row" style={{ marginTop: "15px" }}>
+                  <div className="form-group">
+                    <label
+                      className={styles.label}
+                      style={{ marginBottom: "10px" }}
+                    >
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputCard"
+                      pattern="\d*"
+                      placeholder="Username"
+                      onChange={(e) => {
+                        paymentDetails.customerName = e.target.value;
                       }}
                       style={{ paddingLeft: "15px" }}
                     />
