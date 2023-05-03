@@ -18,34 +18,20 @@ const SingleProduct = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setProduct({
-        id: 1,
-        itemName: "Product 1",
-        itemPrice: 100,
-        itemDescription: "Product 1 description",
-        itemImages: [
-          {
-            data: "https://picsum.photos/200/300",
-          },
-        ],
-        userId: 1,
-        username: "Seller 1",
-      });
-
-      //   axios
-      //     .get(`http://localhost:8000/items/${params.id}`)
-      //     .then((response) => {
-      //       setProduct(response.data.data);
-      //       const binary = Array.from(
-      //         new Uint8Array(response.data.data.itemImages[0].data)
-      //       )
-      //         .map((b) => String.fromCharCode(b))
-      //         .join("");
-      //       setImageData(`data:image/jpeg;base64,${btoa(binary)}`);
-      //     })
-      //     .catch((error) => {
-      //       console.error(error);
-      //     });
+      axios
+        .get(`http://localhost:8000/products/${params.id}`)
+        .then((response) => {
+          setProduct(response.data.data);
+          const binary = Array.from(
+            new Uint8Array(response.data.data.productImages[0].data)
+          )
+            .map((b) => String.fromCharCode(b))
+            .join("");
+          setImageData(`data:image/jpeg;base64,${btoa(binary)}`);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
     fetchProduct();
   }, [params.id]);
@@ -73,37 +59,38 @@ const SingleProduct = () => {
 
   const handleAddToCart = () => {
     alert("added to cart");
-    // if (!localStorage.getItem("token")) {
-    //   alert("Please login first to add to cart!");
-    //   navigate(`/login?redirect=${window.location.pathname}`);
-    //   return;
-    // } else {
-    //   const cart = localStorage.getItem("cartItems");
+    // if (!localStorage.getItem("token")) { // if user is not logged in
+    if (localStorage.getItem("token")) {
+      alert("Please login first to add to cart!");
+      navigate(`/login?redirect=${window.location.pathname}`);
+      return;
+    } else {
+      const cart = localStorage.getItem("cartItems");
 
-    //   const cartItem = {
-    //     itemName: product.itemName,
-    //     itemPrice: product.itemPrice,
-    //     itemQuantity: quantity,
-    //     itemImage: imageData,
-    //   };
+      const cartItem = {
+        itemName: product.productName,
+        itemPrice: product.productPrice,
+        itemQuantity: quantity,
+        itemImage: imageData,
+      };
 
-    //   if (cart) {
-    //     const cartItems = JSON.parse(cart);
-    //     const itemExists = cartItems.find(
-    //       (item) => item.itemName === cartItem.itemName
-    //     );
-    //     if (itemExists) {
-    //       alert("Item already exists in the cart!");
-    //       return;
-    //     }
-    //     cartItems.push(cartItem);
-    //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    //     console.log(JSON.parse(localStorage.getItem("cartItems")));
-    //   } else {
-    //     localStorage.setItem("cartItems", JSON.stringify([cartItem]));
-    //     console.log(JSON.parse(localStorage.getItem("cartItems")));
-    //   }
-    // }
+      if (cart) {
+        const cartItems = JSON.parse(cart);
+        const itemExists = cartItems.find(
+          (item) => item.itemName === cartItem.itemName
+        );
+        if (itemExists) {
+          alert("Item already exists in the cart!");
+          return;
+        }
+        cartItems.push(cartItem);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        console.log(JSON.parse(localStorage.getItem("cartItems")));
+      } else {
+        localStorage.setItem("cartItems", JSON.stringify([cartItem]));
+        console.log(JSON.parse(localStorage.getItem("cartItems")));
+      }
+    }
   };
 
   const handleSubmit = (event) => {
@@ -142,16 +129,16 @@ const SingleProduct = () => {
         <div className="row mt-3">
           <div className="col-4">
             <img
-              src={product.itemImages[0].data}
+              src={imageData}
               alt="Product"
               className={`img-fluid rounded`}
             />
           </div>
           <div className={`col-8 ${styles.productDetailSection}`}>
-            <h2 style={{ marginBottom: "0" }}>{product.itemName}</h2>
+            <h2 style={{ marginBottom: "0" }}>{product.productName}</h2>
             <Button
               variant="link"
-              onClick={() => navigate(`/sellers/${product.userId}`)}
+              onClick={() => navigate(`/sellers/${product.adminId}`)}
               style={{ padding: "0", textDecoration: "none" }}
             >
               <p className="text-muted" style={{ fontSize: "0.9rem" }}>
@@ -167,7 +154,7 @@ const SingleProduct = () => {
               In Stock
             </Badge>
             <hr className={styles.horizontalLine} />
-            <p className="text-muted mb-4">{product.itemDescription}</p>
+            <p className="text-muted mb-4">{product.productDescription}</p>
             <Card className={styles.productCard}>
               <Card.Body>
                 <div className={styles.cardPrice}>
@@ -181,7 +168,7 @@ const SingleProduct = () => {
                       color: "#6C757D",
                     }}
                   >
-                    {product.itemPrice} LKR
+                    {product.productPrice} LKR
                   </Card.Title>
                 </div>
                 <div className={styles.cardTotal}>
@@ -212,7 +199,7 @@ const SingleProduct = () => {
                       }}
                       className="text-success"
                     >
-                      {product.itemPrice * quantity} LKR
+                      {product.productPrice * quantity} LKR
                     </Card.Title>
                   </div>
                 </div>
