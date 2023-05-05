@@ -32,13 +32,14 @@
     display: flex;
     float: right;
     margin-right: 20px;
-    padding: 15px 20px;
+    padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.15);
   }
   
   .productCard {
     border: none;
+    border-radius: 10px;
     max-width: auto;
     padding: 0 20px;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.15);
@@ -48,6 +49,7 @@
     width: 100%;
     padding: 20px;
     margin-top: 3rem;
+    margin-bottom: 3rem;
     background-color: #fff;
     border: 10px;
     border-radius: 0px 10px 10px 0px;
