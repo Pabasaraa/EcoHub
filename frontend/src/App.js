@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+import NavBar from "./components/common/header";
+import Footer from "./components/common/footer";
+
 import AllProducts from "./screens/products/all.products";
 import SingleProduct from "./screens/products/single.product";
 
@@ -14,7 +17,8 @@ import Dashboard from "./screens/admin-dashboard/dashboard";
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{ minHeight: "calc(100vh - 200px)" }}>
+        <NavBar />
         <Routes>
           <Route path="/admin/dashboard/*" element={<Dashboard />} />
 
@@ -25,6 +29,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

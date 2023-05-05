@@ -9,6 +9,8 @@ import {
 } from "cdbreact";
 import { Link, NavLink } from "react-router-dom";
 
+import styles from "./styles/sidebar.module.css";
+
 const Sidebar = () => {
   const [showProductsDropdown, setShowProductsDropdown] = useState(false);
   const [showSeminarsDropdown, setShowSeminarsDropdown] = useState(false);
@@ -28,19 +30,24 @@ const Sidebar = () => {
 
   return (
     <div
-      style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
+      style={{
+        display: "flex",
+        height: "calc(100vh - 63px)",
+        overflow: "scroll initial",
+        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+      }}
     >
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
+      <CDBSidebar textColor="#0000008C" className=" navbar-light bg-light">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a className="text-decoration-none" style={{ color: "inherit" }}>
+          <p className="text-decoration-none" style={{ color: "inherit" }}>
             EcoHub Admin
-          </a>
+          </p>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <div onClick={handleProductsDropdown}>
-              <CDBSidebarMenuItem icon="box">
+              <CDBSidebarMenuItem icon="box" className={styles.links}>
                 Products
                 <i
                   style={{ marginLeft: "5px" }}
@@ -59,7 +66,10 @@ const Sidebar = () => {
                     activeClassName="activeClicked"
                     className="text-white"
                   >
-                    <CDBSidebarMenuItem icon="box-open">
+                    <CDBSidebarMenuItem
+                      icon="box-open"
+                      className={styles.links}
+                    >
                       Add Products
                     </CDBSidebarMenuItem>
                   </NavLink>
@@ -69,7 +79,7 @@ const Sidebar = () => {
                     activeClassName="activeClicked"
                     className="text-white"
                   >
-                    <CDBSidebarMenuItem icon="boxes">
+                    <CDBSidebarMenuItem icon="boxes" className={styles.links}>
                       All Products
                     </CDBSidebarMenuItem>
                   </NavLink>
@@ -77,7 +87,7 @@ const Sidebar = () => {
               )}
             </div>
             <div onClick={handleSeminarsDropdown}>
-              <CDBSidebarMenuItem icon="box">
+              <CDBSidebarMenuItem icon="box" className={styles.links}>
                 Seminars
                 <i
                   style={{ marginLeft: "5px" }}
@@ -96,7 +106,10 @@ const Sidebar = () => {
                     activeClassName="activeClicked"
                     className="text-white"
                   >
-                    <CDBSidebarMenuItem icon="box-open">
+                    <CDBSidebarMenuItem
+                      icon="box-open"
+                      className={styles.links}
+                    >
                       Schedule Seminar
                     </CDBSidebarMenuItem>
                   </NavLink>
@@ -106,7 +119,7 @@ const Sidebar = () => {
                     activeClassName="activeClicked"
                     className="text-white"
                   >
-                    <CDBSidebarMenuItem icon="boxes">
+                    <CDBSidebarMenuItem icon="boxes" className={styles.links}>
                       All Seminars
                     </CDBSidebarMenuItem>
                   </NavLink>
@@ -114,7 +127,7 @@ const Sidebar = () => {
               )}
             </div>
             <div onClick={handleArticlesDropdown}>
-              <CDBSidebarMenuItem icon="book">
+              <CDBSidebarMenuItem icon="book" className={styles.links}>
                 Articles
                 <i
                   style={{ marginLeft: "5px" }}
@@ -133,7 +146,10 @@ const Sidebar = () => {
                     activeClassName="activeClicked"
                     className="text-white"
                   >
-                    <CDBSidebarMenuItem icon="box-open">
+                    <CDBSidebarMenuItem
+                      icon="box-open"
+                      className={styles.links}
+                    >
                       Create Article
                     </CDBSidebarMenuItem>
                   </NavLink>
@@ -143,7 +159,7 @@ const Sidebar = () => {
                     activeClassName="activeClicked"
                     className="text-white"
                   >
-                    <CDBSidebarMenuItem icon="boxes">
+                    <CDBSidebarMenuItem icon="boxes" className={styles.links}>
                       All Articles
                     </CDBSidebarMenuItem>
                   </NavLink>
@@ -151,13 +167,17 @@ const Sidebar = () => {
               )}
             </div>
             <NavLink exact to="orders" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="book-open">Orders</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem className={styles.links} icon="book-open">
+                Orders
+              </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="#" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Users</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem className={styles.links} icon="user">
+                Users
+              </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="#" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">
+              <CDBSidebarMenuItem className={styles.links} icon="chart-line">
                 Submissions
               </CDBSidebarMenuItem>
             </NavLink>
