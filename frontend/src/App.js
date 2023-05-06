@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-// import AddProducts from "./screens/products/add.product";
+import NavBar from "./components/common/header";
+import Footer from "./components/common/footer";
+
 import AllProducts from "./screens/products/all.products";
 import SingleProduct from "./screens/products/single.product";
 import AddSeminar from "./screens/seminar/add.seminar";
@@ -17,17 +19,20 @@ import Profile from "./screens/user/user.profile";
 
 import Home from "./screens/home/home";
 
-// import Cart from "./screens/cart/cart.page";
+import Cart from "./screens/cart/cart.page";
+import Checkout from "./screens/payment/checkout.page";
 
-// import Checkout from "./screens/payment/checkout.page";
+import Dashboard from "./screens/admin-dashboard/dashboard";
 
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{ minHeight: "calc(100vh - 200px)" }}>
+        <NavBar />
         <Routes>
         <Route path="/" element={<Home />} />
-          {/* <Route path="/products/add" element={<AddProducts />} /> */}
+          <Route path="/admin/dashboard/*" element={<Dashboard />} />
+
           <Route path="/products" element={<AllProducts />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/seminar/new" element={<AddSeminar />} />
@@ -39,10 +44,12 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
 
-          {/* <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} /> */}
+
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

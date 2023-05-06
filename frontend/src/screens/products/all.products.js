@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Button, FormControl, InputGroup } from "react-bootstrap";
+import { Button, FormControl, InputGroup, Badge } from "react-bootstrap";
+import { MDBCard, MDBCardBody, MDBCardImage } from "mdb-react-ui-kit";
 import axios from "axios";
 
 import styles from "./styles/all.products.module.css";
@@ -15,96 +16,50 @@ const AllProducts = () => {
 
   const navigate = useNavigate();
 
-  const dummy = [
-    {
-      id: 1,
-      itemName: "Product 1",
-      itemPrice: 100,
-      itemDescription: "Product 1 description",
-      itemImages: [
-        {
-          data: "https://picsum.photos/200/300",
-        },
-      ],
-      userId: 1,
-      username: "Seller 1",
-    },
-    {
-      id: 2,
-      itemName: "Product 2",
-      itemPrice: 200,
-      itemDescription: "Product 2 description",
-      itemImages: [
-        {
-          data: "https://picsum.photos/200/300",
-        },
-      ],
-      userId: 2,
-      username: "Seller 2",
-    },
-    {
-      id: 3,
-      itemName: "Product 3",
-      itemPrice: 200,
-      itemDescription: "Product 3 description",
-      itemImages: [
-        {
-          data: "https://picsum.photos/200/300",
-        },
-      ],
-      userId: 3,
-      username: "Seller 3",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/products/get/all")
+      .then((res) => {
+        setProducts(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   useEffect(() => {
-    setProducts(dummy);
-  });
+    if (products) {
+      const buffers = products.map((product) => product.productImages[0].data);
+      setImageBuffers(buffers);
+    }
+  }, [products]);
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:8000/items/get/all")
-  //       .then((res) => {
-  //         setProducts(res.data.data);
-  //         console.log(res.data.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message);
-  //       });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (products) {
-  //       const buffers = products.map((product) => product.itemImages[0].data);
-  //       setImageBuffers(buffers);
-  //     }
-  //   }, [products]);
-
-  //   useEffect(() => {
-  //     const strings = imageBuffers.map((buffer) => {
-  //       const binary = Array.from(new Uint8Array(buffer))
-  //         .map((b) => String.fromCharCode(b))
-  //         .join("");
-  //       return `data:image/jpeg;base64,${btoa(binary)}`;
-  //     });
-  //     setBase64Strings(strings);
-  //   }, [imageBuffers]);
+  useEffect(() => {
+    const strings = imageBuffers.map((buffer) => {
+      const binary = Array.from(new Uint8Array(buffer))
+        .map((b) => String.fromCharCode(b))
+        .join("");
+      return `data:image/jpeg;base64,${btoa(binary)}`;
+    });
+    setBase64Strings(strings);
+  }, [imageBuffers]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const searchProducts = () => {
-    //   axios
-    //     .post("http://localhost:8000/items/search", {
-    //       searchTerm: searchTerm,
-    //     })
-    //     .then((res) => {
-    //       setProducts(res.data.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.message);
-    //     });
+    axios
+      .post("http://localhost:8000/products/search", {
+        searchTerm: searchTerm,
+      })
+      .then((res) => {
+        setProducts(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
@@ -129,44 +84,52 @@ const AllProducts = () => {
         </InputGroup>
         <h5>All Products:</h5>
         <br />
-        {products && base64Strings.length === 0 ? (
+        {products && base64Strings.length > 0 ? (
           <div className={styles.productGrid}>
             {products.map((product, key) => (
-              <Card key={product.id} className={styles.productCard}>
-                <Card.Img
-                  variant="top"
-                  src={product.itemImages[0].data}
+              <MDBCard
+                key={product.id}
+                onClick={() => navigate(`/products/${product._id}`)}
+                style={{ cursor: "pointer" }}
+                className={styles.productCard}
+              >
+                <MDBCardImage
+                  src={base64Strings[key]}
+                  position="top"
+                  alt={product.productName}
                   className={styles.productIms}
                 />
-                <Card.Body>
-                  <Card.Title style={{ fontSize: "1.1rem" }}>
-                    {product.itemName}
-                  </Card.Title>
-                  <Card.Text style={{ marginTop: "-10px" }}>
-                    <Button
-                      variant="link"
-                      onClick={() => navigate(`/sellers/${product.userId}`)}
-                      style={{ padding: "0", textDecoration: "none" }}
-                    >
-                      <small className="text-muted">{product.username}</small>
-                    </Button>
-                  </Card.Text>
-                  <Card.Text
-                    className={`
-                    text-success ${styles.productPrice}`}
-                  >
-                    {product.itemPrice} LKR
-                  </Card.Text>
-                  <hr style={{ opacity: "0.15", marginBottom: "25px" }} />
-                  <Button
-                    className={styles.viewBtn}
-                    variant="outline-secondary"
-                    onClick={() => navigate(`/products/${product._id}`)}
-                  >
-                    View Details
-                  </Button>
-                </Card.Body>
-              </Card>
+                <MDBCardBody
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>
+                    <hr className="mb-4" style={{ opacity: "0.15" }} />
+                    <div className="d-flex justify-content-between mb-1">
+                      <h5 className="mb-0">{product.productName}</h5>
+                    </div>
+
+                    <div className="d-flex justify-content-between mb-3">
+                      <p className="small text-muted mb-0">
+                        {product.productCategory}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between mb-3 mt-1">
+                    <div style={{ marginTop: "7px" }}>
+                      <Badge class="text-muted mb-0">Available</Badge>
+                    </div>
+                    <h3 className="text-dark mb-0">
+                      {product.productPrice}{" "}
+                      <span style={{ fontSize: "0.9rem" }}>LKR</span>
+                    </h3>
+                  </div>
+                </MDBCardBody>
+              </MDBCard>
             ))}
           </div>
         ) : (
