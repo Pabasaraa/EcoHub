@@ -23,8 +23,6 @@ const Checkout = () => {
   }, []);
 
   const processPayment = async () => {
-    console.log("processing Payment");
-
     const paymentData = {
       cardHoler: paymentDetails.cardHolder,
       cardNumber: paymentDetails.cardNumber,
@@ -39,7 +37,7 @@ const Checkout = () => {
     const customerAddress =
       transactionDetails.shippingMethod === "home_delivery"
         ? transactionDetails.shippingDetails
-        : "No Address";
+        : "Store pickcup";
 
     const orderData = {
       token: localStorage.getItem("token"),
@@ -47,11 +45,11 @@ const Checkout = () => {
       customerId: paymentDetails.customerId,
       customerAddress: customerAddress,
       orderedProducts: cartItems,
-      totalPrice: transactionDetails.totalPrice,
+      totalPrice: transactionDetails.total,
       shippingOption: transactionDetails.shippingOption,
     };
 
-    alert("Order places!");
+    alert("processing Payment! Please Wait...");
 
     await axios.post("http://localhost:8000/orders/new", orderData).then(() => {
       localStorage.removeItem("cartItems");

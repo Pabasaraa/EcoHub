@@ -33,7 +33,8 @@ function OrdersList() {
                 <th scope="col">Customer Name</th>
                 <th scope="col">Ordered Items</th>
                 <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Total Price</th>
                 <th scope="col">Address</th>
               </tr>
             </MDBTableHead>
@@ -42,7 +43,7 @@ function OrdersList() {
                 orders.map((order, key) => (
                   <tr>
                     <td>
-                      <div className="d-flex align-items-center">
+                      <div style={{ display: "flex", flexDirection: "column" }}>
                         <div>
                           <p className="mb-1">{order._id}</p>
                         </div>
@@ -86,6 +87,13 @@ function OrdersList() {
                             </div>
                           </div>
                         ))}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <div>
+                          <p className="mb-1">{order.totalPrice}</p>
+                        </div>
                       </div>
                     </td>
                     <td>

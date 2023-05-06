@@ -44,8 +44,8 @@ const createOrder = async (req, res) => {
         to: "pabasara.was@gmail.com",
         subject: "Payment Confirmation",
         html: `
-          <p>Dear  ${req.body.username}</p>
-          <p>Thank you for your payment of ${req.body.totalPrice}LKR. This email is to confirm that your payment has been received and processed.</p>
+          <p>Dear  ${newOrder.customerName}</p>
+          <p>Thank you for your payment of ${newOrder.totalPrice} LKR. This email is to confirm that your payment has been received and processed.</p>
           <p>Thank you for choosing our service.</p>
           <p>Best regards,</p>
           <p>EcoHub co.</p>

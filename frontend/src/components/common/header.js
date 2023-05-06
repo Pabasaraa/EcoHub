@@ -20,8 +20,7 @@ function NavBar() {
     <nav
       className="navbar navbar-expand-lg navbar-light bg-light"
       style={{
-        paddingTop: "10px",
-        paddingBottom: "10px",
+        padding: "0.8rem 3rem",
         boxShadow: "0 0 10px rgba(0,0,0,0.1)",
       }}
     >
@@ -60,7 +59,7 @@ function NavBar() {
           </ul>
         </div>
 
-        {isLoggedin ? (
+        {!isLoggedin ? (
           <div className="d-flex align-items-center">
             <Link className="text-reset me-3" to={"/cart"}>
               <i className="fas fa-shopping-cart"></i>
