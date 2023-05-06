@@ -63,6 +63,7 @@ const Cart = () => {
       shippingMethod,
     };
 
+    console.log("trasactionDetails", transactionDetails);
     // it should be !localStorage.getItem(). Removed ! to run properly without user management system
     if (localStorage.getItem("token")) {
       alert("Please login & comeback to checkout!");
@@ -89,7 +90,11 @@ const Cart = () => {
             >
               <Row>
                 <Col xs={12} md={4}>
-                  <Card.Img src={product.itemImage} alt={product.itemName} />
+                  <Card.Img
+                    style={{ objectFit: "scale-down" }}
+                    src={product.itemImage}
+                    alt={product.itemName}
+                  />
                 </Col>
                 <Col xs={12} md={8}>
                   <Card.Body>
