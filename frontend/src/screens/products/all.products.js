@@ -10,7 +10,7 @@ import Loader from "../../components/common/spinner";
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState(null);
-  const [imageBuffers, setImageBuffers] = useState([]);
+  // const [imageBuffers, setImageBuffers] = useState([]);
   const [base64Strings, setBase64Strings] = useState([]);
 
   const navigate = useNavigate();
