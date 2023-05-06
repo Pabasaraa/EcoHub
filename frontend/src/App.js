@@ -13,6 +13,8 @@ import Cart from "./screens/cart/cart.page";
 import Checkout from "./screens/payment/checkout.page";
 
 import Dashboard from "./screens/admin-dashboard/dashboard";
+import AddArticles from "./screens/articles/addArticle";
+import ArticleList from "./screens/articles/articleList";
 
 function App() {
   return (
@@ -27,6 +29,9 @@ function App() {
 
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+
+          <Route path="/addArticle" element={<AddArticles />} />
+          <Route path="/articleList" element={<ArticleList />} />
         </Routes>
       </div>
       <Footer />

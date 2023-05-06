@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import ProductRoutes from "./product-management-service/routes/product.route.js";
 import OrderRoutes from "./order-management-service/routes/order.route.js";
 import ReviewRouter from "./review-management-service/routes/review.route.js";
+import ArticleRoutes from "./article-management-service/routes/article.route.js";
 
 // Load environment variables from .env file to the process.env object
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use("/products", ProductRoutes);
 app.use("/orders", OrderRoutes);
 app.use("/reviews", ReviewRouter);
+app.use("/articles", ArticleRoutes);
 
 // Connect to the database
 connectDB();
