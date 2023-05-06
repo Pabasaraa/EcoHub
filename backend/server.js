@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 
 // Import routes
 import ProductRoutes from "./product-management-service/routes/product.route.js";
+import userRoutes from "./user-management-service/routes/user.route.js";
+import seminarRoutes from "./seminar-management/routes/seminar.route.js";
 import OrderRoutes from "./order-management-service/routes/order.route.js";
 import ReviewRouter from "./review-management-service/routes/review.route.js";
 
@@ -19,9 +21,14 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 
+app.use("/", (res) => {
+  res.send("EcoHub backend service!");
+});
+
 // Use routes
 app.use("/products", ProductRoutes);
-app.use("/orders", OrderRoutes);
+app.use("/users", userRoutes);
+app.use("/seminars", seminarRoutes);app.use("/orders", OrderRoutes);
 app.use("/reviews", ReviewRouter);
 
 // Connect to the database
