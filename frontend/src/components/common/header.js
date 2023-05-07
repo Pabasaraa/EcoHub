@@ -1,20 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import { Dropdown } from "react-bootstrap";
 
 import logo from "../../assets/Logo.png";
 
 function NavBar() {
   const [isLoggedin, setIsLoggedin] = useState(false);
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedin(true);
-    }
-  }, []);
+    const checkLoginStatus = () => {
+      if (!localStorage.getItem("token")) {
+        setIsLoggedin(false);
+        return;
+      }
+
+      axios
+        .post(
+          "http://localhost:8000/users/validatetoken",
+          {},
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((res) => {
+          setIsLoggedin(true);
+          setUser(res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoggedin(false);
+        });
+    };
+
+    checkLoginStatus();
+  }, [token]);
 
   return (
     <nav
@@ -59,7 +85,7 @@ function NavBar() {
           </ul>
         </div>
 
-        {!isLoggedin ? (
+        {isLoggedin ? (
           <div className="d-flex align-items-center">
             <Link className="text-reset me-3" to={"/cart"}>
               <i className="fas fa-shopping-cart"></i>
@@ -76,14 +102,35 @@ function NavBar() {
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu-end">
                 <Dropdown.Item>
-                  <Link className="nav-link" to={"/profile"}>
-                    My profile
-                  </Link>
+                  {user.role === "admin" ? (
+                    <Link className="nav-link" to={"/admin/dashboard"}>
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link className="nav-link" to={"/profile"}>
+                      My profile
+                    </Link>
+                  )}
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link className="nav-link" to={"/profile"}>
-                    Log out
-                  </Link>
+                  <button
+                    className={`btn btn-link `}
+                    style={{
+                      margin: "0px",
+                      padding: "0px",
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    onClick={() => {
+                      localStorage.clear();
+                      setIsLoggedin(false);
+                      setUser(null);
+                      navigate("/login");
+                    }}
+                  >
+                    {" "}
+                    Logout{" "}
+                  </button>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -100,7 +147,7 @@ function NavBar() {
             <button
               type="button"
               className="btn btn-primary me-3"
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/register")}
             >
               Sign up
             </button>

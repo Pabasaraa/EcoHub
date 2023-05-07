@@ -30,20 +30,20 @@ function App() {
       <div style={{ minHeight: "calc(100vh - 200px)" }}>
         <NavBar />
         <Routes>
-        <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/admin/dashboard/*" element={<Dashboard />} />
-
-          <Route path="/products" element={<AllProducts />} />
-          <Route path="/products/:id" element={<SingleProduct />} />
-          <Route path="/seminar/new" element={<AddSeminar />} />
-          <Route path="/seminar/list" element={<SeminarList />} />
-          <Route path="/seminar/manage" element={<SeminarManage />} />
-          <Route path="/seminar/update/:id" element= {<UpdateSeminar/>} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
 
+          <Route path="/products" element={<AllProducts />} />
+          <Route path="/products/:id" element={<SingleProduct />} />
+
+          <Route path="/seminar/new" element={<AddSeminar />} />
+          <Route path="/seminar/list" element={<SeminarList />} />
+          <Route path="/seminar/manage" element={<SeminarManage />} />
+          <Route path="/seminar/update/:id" element={<UpdateSeminar />} />
 
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

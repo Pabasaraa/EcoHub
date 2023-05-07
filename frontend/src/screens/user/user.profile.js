@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Card, Button, Badge } from "react-bootstrap";
-import Loader from "../../components/common/spinner";  
+import Loader from "../../components/common/spinner";
 import styles from "./styles/profile.module.css";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [orders, setOrders] = useState(null);
-  const [reviews, setReviews] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,14 +47,6 @@ const Profile = () => {
     setUser(user.data);
   };
 
-  const fetchReviews = async () => {
-    const reviews = await axios.get(
-      `http://localhost:8000/reviews/${user._id}`
-    );
-    console.log(reviews.data.data);
-    setReviews(reviews.data.data);
-  };
-
   const fetchOrders = async () => {
     const allOrders = await axios.get(
       `http://localhost:8000/orders/user/${user._id}`
@@ -67,7 +59,6 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        fetchReviews();
         fetchOrders();
       }, 2000);
     }
@@ -152,70 +143,35 @@ const Profile = () => {
               </Button>
             </Card.Body>
           </Card>
-          {user.role === "seller" ? (
-            <div>
-              {reviews ? (
-                <div className="row mt-5" style={{ width: "100%" }}>
-                  <div className="col">
-                    <h3>Reviews ({reviews.length})</h3>
-                    <hr className={styles.horizontalLine} />
-                    <div className="container">
-                      {reviews.map((review, index) => (
-                        <Card
-                          key={index}
-                          className="mb-4"
-                          style={{ width: "100%" }}
-                        >
-                          <Card.Body>
-                            <Card.Title>{review.reviewTitle}</Card.Title>
-                            <Card.Subtitle className="mb-3 text-muted">
-                              <p>
-                                <span style={{ fontSize: "0.8rem" }}>
-                                  Posted By: {review.postedBy}
-                                </span>{" "}
-                              </p>
-                            </Card.Subtitle>
-                            <hr className={styles.horizontalLine} />
-                            <Card.Body>{review.reviewBody}</Card.Body>
-                          </Card.Body>
-                        </Card>
-                      ))}
-                    </div>
+          <div className={styles.orders}>
+            {!orders ? (
+              <Loader />
+            ) : (
+              <div>
+                {orders && orders.length === 0 ? (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Card.Title className="mt-5 mb-2">
+                      You have no orders yet..{" "}
+                      <button
+                        className={styles.clickableText}
+                        onClick={() => navigate("/products")}
+                      >
+                        Shop now
+                      </button>
+                    </Card.Title>
                   </div>
-                </div>
-              ) : (
-                <Loader />
-              )}
-            </div>
-          ) : (
-            <div className={styles.orders}>
-              {!orders ? (
-                <Loader />
-              ) : (
-                <div>
-                  {orders && orders.length === 0 ? (
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Card.Title className="mt-5 mb-2">
-                        You have no orders yet..{" "}
-                        <button
-                          className={styles.clickableText}
-                          onClick={() => navigate("/products")}
-                        >
-                          Shop now
-                        </button>
-                      </Card.Title>
-                    </div>
-                  ) : (
-                    <div className={styles.payments}>
-                      <h3 className="mb-4 mt-3">Your Orders</h3>
-                      {orders.map((order, index) => (
-                        <Card className="mb-5" style={{ width: "100%" }}>
-                          <Card.Body>
-                            <Card.Title className="mb-4">
-                              Order #{index + 1}
-                            </Card.Title>
-                            <Card.Text>
-                              {order.orderedItems.map((product, index) => (
+                ) : (
+                  <div className={styles.payments}>
+                    <h3 className="mb-4 mt-3">Your Orders</h3>
+                    {orders.map((order, index) => (
+                      <Card className="mb-5" style={{ width: "100%" }}>
+                        <Card.Body>
+                          <Card.Title className="mb-4">
+                            Order #{index + 1}
+                          </Card.Title>
+                          <Card.Text>
+                            {order.orderedItems &&
+                              order.orderedItems.map((product, index) => (
                                 <div key={index} className={styles.row}>
                                   <p style={{ width: "500px" }}>
                                     {product.itemName}
@@ -224,20 +180,19 @@ const Profile = () => {
                                   <p>Price: ${product.itemPrice}</p>
                                 </div>
                               ))}
-                              <hr />
-                            </Card.Text>
-                            <Badge variant="primary" className={styles.status}>
-                              {order.status}
-                            </Badge>
-                          </Card.Body>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+                            <hr />
+                          </Card.Text>
+                          <Badge variant="primary" className={styles.status}>
+                            {order.status}
+                          </Badge>
+                        </Card.Body>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           <br />
           <Button
             className={styles.deleteButton}

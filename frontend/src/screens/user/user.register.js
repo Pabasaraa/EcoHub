@@ -4,12 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles/login.module.css";
 
 const Register = () => {
-  const [role, setRole] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     name: "",
     email: "",
-    // role: "",
     password: "",
     repeatPassword: "",
   });
@@ -54,62 +52,6 @@ const Register = () => {
                   <h2 className="mb-3">Sign up</h2>
 
                   <hr className="mb-4" style={{ opacity: "0.15" }} />
-{/* 
-                  <div className="form-outline mb-4">
-                    <label
-                      htmlFor="role"
-                      className="mb-3"
-                      style={{ color: "#585555", fontSize: "1.1rem" }}
-                    >
-                      Register as a
-                    </label>
-                    <div className="card-group">
-                      <div
-                        className={`card ${
-                          role === "seller" ? "bg-primary text-white" : ""
-                        }`}
-                        onClick={() => setRole("seller")}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="card-body">
-                          <input
-                            type="radio"
-                            id="seller"
-                            name="role"
-                            value="seller"
-                            className="form-check-input visually-hidden"
-                            onChange={handleInputChange}
-                            required
-                          />
-                          <label htmlFor="seller" className="form-check-label">
-                            Seller
-                          </label>
-                        </div>
-                      </div>
-                      <div
-                        className={`card ${
-                          role === "user" ? "bg-primary text-white" : ""
-                        }`}
-                        onClick={() => setRole("user")}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="card-body">
-                          <input
-                            type="radio"
-                            id="user"
-                            name="role"
-                            value="user"
-                            className="form-check-input visually-hidden"
-                            onChange={handleInputChange}
-                            required
-                          />
-                          <label htmlFor="user" className="form-check-label">
-                            Buyer
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
 
                   <div className="form-outline mb-4">
                     <input
