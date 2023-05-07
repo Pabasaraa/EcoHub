@@ -13,8 +13,17 @@ const AllProducts = () => {
   const [products, setProducts] = useState(null);
   const [imageBuffers, setImageBuffers] = useState([]);
   const [base64Strings, setBase64Strings] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const navigate = useNavigate();
+
+  const categories = [
+    "All Categories", // Include an option for showing all categories
+    "Solar Panels",
+    "Inverters",
+    "Home Appliances",
+    "Other",
+  ];
 
   useEffect(() => {
     axios
@@ -44,6 +53,10 @@ const AllProducts = () => {
     });
     setBase64Strings(strings);
   }, [imageBuffers]);
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -82,7 +95,32 @@ const AllProducts = () => {
             Search
           </Button>
         </InputGroup>
-        <h5>All Products:</h5>
+        <div className="d-flex justify-content-between">
+          <h5>All Products:</h5>
+          <div>
+            <label htmlFor="category-select" style={{ marginRight: "15px" }}>
+              Filter by Category:
+            </label>
+            <select
+              id="category-select"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              style={{
+                width: "150px",
+                height: "30px",
+                borderRadius: "5px",
+                borderColor: "#ced4da",
+                color: "#495057",
+              }}
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <br />
         {products && base64Strings.length > 0 ? (
           <div className={styles.productGrid}>
