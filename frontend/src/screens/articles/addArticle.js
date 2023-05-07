@@ -44,7 +44,7 @@ const AddArticles = () => {
       .post("http://localhost:8000/articles/new", formData)
       .then((response) => {
         console.log(response);
-        navigate("/articles");
+        navigate("/articleList");
       })
       .catch((error) => {
         console.log(error);
