@@ -41,8 +41,6 @@ const AddProducts = () => {
 
     const formData = new FormData();
     formData.append("token", localStorage.getItem("token"));
-    formData.append("role", productData.role);
-    formData.append("adminId", productData.adminId);
     formData.append("productName", productData.productName);
     formData.append("productDescription", productData.productDescription);
     formData.append("productCategory", productData.productCategory);
@@ -70,44 +68,6 @@ const AddProducts = () => {
           <form onSubmit={handleSubmit}>
             <h2 className="mb-4">Add New Product</h2>
             <hr className="mb-4" style={{ opacity: "0.15" }} />
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="role"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                Role:
-              </label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                className="form-control"
-                defaultValue={productData.role}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="adminId"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                admin ID:
-              </label>
-              <input
-                type="text"
-                id="adminId"
-                name="adminId"
-                className="form-control"
-                defaultValue={productData.adminId}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
 
             <div className="form-group mb-4">
               <label

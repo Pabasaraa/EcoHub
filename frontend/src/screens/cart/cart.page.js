@@ -64,8 +64,7 @@ const Cart = () => {
     };
 
     console.log("trasactionDetails", transactionDetails);
-    // it should be !localStorage.getItem(). Removed ! to run properly without user management system
-    if (localStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       alert("Please login & comeback to checkout!");
       navigate("/login");
     } else {

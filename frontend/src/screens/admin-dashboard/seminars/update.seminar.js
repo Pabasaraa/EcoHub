@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./styles/add.seminar.module.css";
-import img from "../../assets/headimg1.jpg";
+import img from "../../../assets/headimg1.jpg";
 import ImgHead from "./img.head";
 
 const UpdateSeminar = () => {

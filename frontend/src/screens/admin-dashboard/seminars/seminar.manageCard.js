@@ -45,7 +45,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Seminarlist } from "./dummyData/dummyData.js";
 import { BsFillCalendar2DateFill } from "react-icons/bs";
 import { BsFillClockFill } from "react-icons/bs";
 import { ImLocation2 } from "react-icons/im";

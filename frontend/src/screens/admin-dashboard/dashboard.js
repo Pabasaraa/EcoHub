@@ -2,12 +2,17 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
-import Sidebar from "../../components/admin/Sidebar.js";
 import styles from "./styles/dashboard.module.css";
+
+import Sidebar from "../../components/admin/Sidebar.js";
 
 import AddProducts from "./products/add.product.js";
 import ListProducts from "./products/list.products.js";
 import UpdateProduct from "./products/update.product.js";
+
+import AddSeminar from "../seminar/add.seminar.js";
+import SeminarManage from "../seminar/seminar.manage.js";
+import UpdateSeminar from "../seminar/update.seminar.js";
 
 import OrdersList from "./orders/list.orders.js";
 
@@ -23,6 +28,10 @@ const Dashboard = () => {
           <Route path="products/add" element={<AddProducts />} />
           <Route path="products" element={<ListProducts />} />
           <Route path="products/update/:id" element={<UpdateProduct />} />
+
+          <Route path="schedule/seminar" element={<AddSeminar />} />
+          <Route path="all/seminars" element={<SeminarManage />} />
+          <Route path="update/seminars/:id" element={<UpdateSeminar />} />
 
           <Route path="orders" element={<OrdersList />} />
         </Routes>

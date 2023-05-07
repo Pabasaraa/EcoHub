@@ -51,7 +51,7 @@ const ListProducts = () => {
   const onDelete = (id) => {
     axios.delete(`http://localhost:8000/products/delete/${id}`).then(() => {
       alert("Delete Successfully");
-      this.retrieveItems();
+      retrieveItems();
     });
   };
 

@@ -30,10 +30,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/list.seminar.module.css";
 import ImgHead from "./img.head";
-import ListCard from "./seminar.listCard";
-import img from "../../assets/headimgmanage.png";
+import img from "../../../assets/headimgmanage.png";
 import axios from "axios";
-import { Card, Button, FormControl, InputGroup } from "react-bootstrap";
 import ManageCard from "./seminar.manageCard";
 
 const SeminarManage = () => {

@@ -60,13 +60,12 @@ const SingleProduct = () => {
   };
 
   const handleAddToCart = () => {
-    alert("added to cart");
-    // if (!localStorage.getItem("token")) { // if user is not logged in
-    if (localStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       alert("Please login first to add to cart!");
       navigate(`/login?redirect=${window.location.pathname}`);
       return;
     } else {
+      alert("added to cart");
       const cart = localStorage.getItem("cartItems");
 
       const cartItem = {
@@ -98,11 +97,11 @@ const SingleProduct = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // if (!localStorage.getItem("token")) {
-    //   alert("Please login first to submit a review!");
-    //   navigate(`/login?redirect=${window.location.pathname}`);
-    //   return;
-    // }
+    if (!localStorage.getItem("token")) {
+      alert("Please login first to submit a review!");
+      navigate(`/login?redirect=${window.location.pathname}`);
+      return;
+    }
 
     const review = {
       reviewTitle: event.target.reviewTitle.value,

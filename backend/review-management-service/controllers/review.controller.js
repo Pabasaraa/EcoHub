@@ -4,25 +4,25 @@ import reviewValidation from "../services/validation.service.js";
 
 const createReview = async (req, res) => {
   try {
-    // if (!req.body.token) {
-    //   throw new Error("No token provided!");
-    // }
+    if (!req.body.token) {
+      throw new Error("No token provided!");
+    }
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8000/users/validatetoken",
-    //     {},
-    //     {
-    //       headers: {
-    //         "x-access-token": req.body.token,
-    //       },
-    //     }
-    //   );
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/users/validatetoken",
+        {},
+        {
+          headers: {
+            "x-access-token": req.body.token,
+          },
+        }
+      );
 
-    //   req.body.postedBy = response.data.data._id;
-    // } catch (error) {
-    //   throw new Error("Error while getting the user ID: " + error);
-    // }
+      req.body.postedBy = response.data.data._id;
+    } catch (error) {
+      throw new Error("Error while getting the user ID: " + error);
+    }
     req.body.postedBy = 123;
     const review = new reviewValidation(req.body);
     await review.validate();

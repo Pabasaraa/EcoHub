@@ -121,7 +121,9 @@ const AllProducts = () => {
 
                   <div class="d-flex justify-content-between mb-3 mt-1">
                     <div style={{ marginTop: "7px" }}>
-                      <Badge class="text-muted mb-0">Available</Badge>
+                      <Badge class="text-muted mb-0" bg="success">
+                        Available
+                      </Badge>
                     </div>
                     <h3 className="text-dark mb-0">
                       {product.productPrice}{" "}

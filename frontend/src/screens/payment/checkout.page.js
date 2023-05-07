@@ -97,48 +97,6 @@ const Checkout = () => {
                       className={styles.label}
                       style={{ marginBottom: "10px" }}
                     >
-                      User ID
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputCard"
-                      pattern="\d*"
-                      placeholder="User ID"
-                      onChange={(e) => {
-                        paymentDetails.customerId = e.target.value;
-                      }}
-                      style={{ paddingLeft: "15px" }}
-                    />
-                  </div>
-                </div>
-                <div className="row" style={{ marginTop: "15px" }}>
-                  <div className="form-group">
-                    <label
-                      className={styles.label}
-                      style={{ marginBottom: "10px" }}
-                    >
-                      Username
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputCard"
-                      pattern="\d*"
-                      placeholder="Username"
-                      onChange={(e) => {
-                        paymentDetails.customerName = e.target.value;
-                      }}
-                      style={{ paddingLeft: "15px" }}
-                    />
-                  </div>
-                </div>
-                <div className="row" style={{ marginTop: "15px" }}>
-                  <div className="form-group">
-                    <label
-                      className={styles.label}
-                      style={{ marginBottom: "10px" }}
-                    >
                       Card Number
                     </label>
                     <input

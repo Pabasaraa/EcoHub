@@ -41,7 +41,7 @@ function App() {
           <Route path="/products/:id" element={<SingleProduct />} />
 
           <Route path="/seminar/new" element={<AddSeminar />} />
-          <Route path="/seminar/list" element={<SeminarList />} />
+          <Route path="/seminars" element={<SeminarList />} />
           <Route path="/seminar/manage" element={<SeminarManage />} />
           <Route path="/seminar/update/:id" element={<UpdateSeminar />} />
 

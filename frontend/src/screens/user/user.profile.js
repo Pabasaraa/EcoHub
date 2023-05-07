@@ -118,13 +118,11 @@ const Profile = () => {
           >
             <Card.Body>
               <Card.Title>{user.name}</Card.Title>
-              {user.role === "seller" ? (
-                <Badge pill variant="info" bg="info">
-                  Seller
-                </Badge>
+              {user.role === "user" ? (
+                <div></div>
               ) : (
-                <Badge pill variant="primary" bg="primary">
-                  Buyer
+                <Badge pill variant="primary" bg="success">
+                  Admin
                 </Badge>
               )}
               <Card.Text className="mt-4 mb-4">

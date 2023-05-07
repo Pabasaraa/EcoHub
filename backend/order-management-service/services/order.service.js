@@ -30,7 +30,7 @@ const getOrderById = async (orderId) => {
 
 const getOrdersByUserId = async (userId) => {
   try {
-    const orders = await orderModel.find({ userId: userId });
+    const orders = await orderModel.find({ customerId: userId });
     return orders;
   } catch (error) {
     throw new Error(

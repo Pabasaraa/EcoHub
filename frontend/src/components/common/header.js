@@ -68,7 +68,7 @@ function NavBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to={"#"}>
+              <Link className="nav-link" to={"/seminars"}>
                 <b>Seminars</b>
               </Link>
             </li>
@@ -93,7 +93,7 @@ function NavBar() {
             <Dropdown>
               <Dropdown.Toggle variant="link" id="navbarDropdownMenuAvatar">
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=826&t=st=1683198458~exp=1683199058~hmac=c430349ec56b0918e8c14689b3cea601b7df3233a082703ca736e8758edfd22d"
                   className="rounded-circle"
                   height="25"
                   alt="Black and White Portrait of a Man"
@@ -112,7 +112,14 @@ function NavBar() {
                     </Link>
                   )}
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    localStorage.clear();
+                    setIsLoggedin(false);
+                    setUser(null);
+                    navigate("/login");
+                  }}
+                >
                   <button
                     className={`btn btn-link `}
                     style={{
@@ -121,15 +128,8 @@ function NavBar() {
                       textDecoration: "none",
                       color: "black",
                     }}
-                    onClick={() => {
-                      localStorage.clear();
-                      setIsLoggedin(false);
-                      setUser(null);
-                      navigate("/login");
-                    }}
                   >
-                    {" "}
-                    Logout{" "}
+                    Logout
                   </button>
                 </Dropdown.Item>
               </Dropdown.Menu>
