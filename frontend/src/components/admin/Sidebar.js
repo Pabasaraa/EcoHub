@@ -102,7 +102,7 @@ const Sidebar = () => {
                 <div style={{ marginLeft: 20 }}>
                   <NavLink
                     exact
-                    to="#"
+                    to="schedule/seminar"
                     activeClassName="activeClicked"
                     className="text-white"
                   >
@@ -115,7 +115,7 @@ const Sidebar = () => {
                   </NavLink>
                   <NavLink
                     exact
-                    to="#"
+                    to="all/seminars"
                     activeClassName="activeClicked"
                     className="text-white"
                   >

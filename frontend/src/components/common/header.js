@@ -1,20 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import { Dropdown } from "react-bootstrap";
 
 import logo from "../../assets/Logo.png";
 
 function NavBar() {
   const [isLoggedin, setIsLoggedin] = useState(false);
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedin(true);
-    }
-  }, []);
+    const checkLoginStatus = () => {
+      if (!localStorage.getItem("token")) {
+        setIsLoggedin(false);
+        return;
+      }
+
+      axios
+        .post(
+          "http://localhost:8000/users/validatetoken",
+          {},
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((res) => {
+          setIsLoggedin(true);
+          setUser(res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoggedin(false);
+        });
+    };
+
+    checkLoginStatus();
+  }, [token]);
 
   return (
     <nav
@@ -42,7 +68,7 @@ function NavBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to={"#"}>
+              <Link className="nav-link" to={"/seminars"}>
                 <b>Seminars</b>
               </Link>
             </li>
@@ -59,7 +85,7 @@ function NavBar() {
           </ul>
         </div>
 
-        {!isLoggedin ? (
+        {isLoggedin ? (
           <div className="d-flex align-items-center">
             <Link className="text-reset me-3" to={"/cart"}>
               <i className="fas fa-shopping-cart"></i>
@@ -67,7 +93,7 @@ function NavBar() {
             <Dropdown>
               <Dropdown.Toggle variant="link" id="navbarDropdownMenuAvatar">
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=826&t=st=1683198458~exp=1683199058~hmac=c430349ec56b0918e8c14689b3cea601b7df3233a082703ca736e8758edfd22d"
                   className="rounded-circle"
                   height="25"
                   alt="Black and White Portrait of a Man"
@@ -76,14 +102,35 @@ function NavBar() {
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu-end">
                 <Dropdown.Item>
-                  <Link className="nav-link" to={"/profile"}>
-                    My profile
-                  </Link>
+                  {user.role === "admin" ? (
+                    <Link className="nav-link" to={"/admin/dashboard"}>
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link className="nav-link" to={"/profile"}>
+                      My profile
+                    </Link>
+                  )}
                 </Dropdown.Item>
-                <Dropdown.Item>
-                  <Link className="nav-link" to={"/profile"}>
-                    Log out
-                  </Link>
+                <Dropdown.Item
+                  onClick={() => {
+                    localStorage.clear();
+                    setIsLoggedin(false);
+                    setUser(null);
+                    navigate("/login");
+                  }}
+                >
+                  <button
+                    className={`btn btn-link `}
+                    style={{
+                      margin: "0px",
+                      padding: "0px",
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    Logout
+                  </button>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -100,7 +147,7 @@ function NavBar() {
             <button
               type="button"
               className="btn btn-primary me-3"
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/register")}
             >
               Sign up
             </button>

@@ -4,28 +4,26 @@ import orderService from "../services/order.service.js";
 
 const createOrder = async (req, res) => {
   try {
-    // uncomment this code block to validate the token when user-service is up and running
+    if (!req.body.token) {
+      throw new Error("No token provided!");
+    }
 
-    // if (!req.body.token) {
-    //   throw new Error("No token provided!");
-    // }
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/users/validatetoken",
+        {},
+        {
+          headers: {
+            "x-access-token": req.body.token,
+          },
+        }
+      );
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8000/users/validatetoken",
-    //     {},
-    //     {
-    //       headers: {
-    //         "x-access-token": req.body.token,
-    //       },
-    //     }
-    //   );
-
-    //   req.body.customerId = response.data.data._id;
-    //   req.body.customerName = response.data.data.username;
-    // } catch (error) {
-    //   throw new Error("Error while getting the user ID: " + error);
-    // }
+      req.body.customerId = response.data.data._id;
+      req.body.customerName = response.data.data.username;
+    } catch (error) {
+      throw new Error("Error while getting the user ID: " + error);
+    }
 
     const newOrder = await orderService.createOrder(req.body);
 
