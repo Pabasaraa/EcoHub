@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import styles from "./styles/add.article.module.css";
+import image from "./styles/img/background.jpg"
+
 
 const AddArticles = () => {
   const [articleData, setArticleData] = useState({});
@@ -40,19 +42,32 @@ const AddArticles = () => {
 
    
 
-    axios
-      .post("http://localhost:8000/articles/new", formData)
-      .then((response) => {
-        console.log(response);
-        navigate("/articleList");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+   // Create a JavaScript object from the FormData
+   const data = {};
+   for (let [key, value] of formData.entries()) {
+     data[key] = value;
+   }
+
+   axios
+     .post("http://localhost:8000/articles/new", data, {
+       headers: {
+         "Content-Type": "application/json",
+       },
+     })
+     .then((response) => {
+       console.log(response);
+       navigate("/articleList");
+     })
+     .catch((error) => {
+       console.log(data);
+       console.log(error);
+     });
   };
 
   return (
+    <div className="container" style={{backgroundImage:`url(${image})`, backgroundRepeat:"no-repeat" }}>
     <section className="container py-5 h-100">
+     
       <div className="row d-flex h-100">
         <div className="card-body text-center">
           <form onSubmit={handleSubmit}>
@@ -200,7 +215,10 @@ const AddArticles = () => {
           </form>
         </div>
       </div>
+     
+     
     </section>
+    </div>
   );
 };
 export default AddArticles;

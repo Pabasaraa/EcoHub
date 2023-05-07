@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import styles from "./styles/add.article.module.css";
+import image from "./styles/img/background.jpg"
 
 const UpdateArticle = () => {
   const [articleData, setArticleData] = useState({});
@@ -62,6 +63,7 @@ const UpdateArticle = () => {
   };
 
   return (
+    <div className="container" style={{backgroundImage:`url(${image})`, backgroundRepeat:"no-repeat" }}>
     <section className="container py-5 h-100">
       <div className="row d-flex h-100">
         <div className="card-body text-center">
@@ -82,6 +84,7 @@ const UpdateArticle = () => {
                 id="role"
                 name="role"
                 className="form-control"
+                placeholder="admin"
                 defaultValue={articleData.role}
                 onChange={handleInputChange}
                 required
@@ -101,6 +104,7 @@ const UpdateArticle = () => {
                 id="adminId"
                 name="adminId"
                 className="form-control"
+                placeholder="0123"
                 defaultValue={articleData.adminId}
                 onChange={handleInputChange}
                 required
@@ -121,6 +125,7 @@ const UpdateArticle = () => {
                 id="articleTitle"
                 name="articleTitle"
                 className="form-control"
+                placeholder="New Title1"
                 defaultValue={articleData.articleTitle}
                 onChange={handleInputChange}
                 required
@@ -141,6 +146,7 @@ const UpdateArticle = () => {
                 type="text"
                 id="articleAuthor"
                 className="form-control"
+                placeholder="Mr.Perera"
                 name="articleAuthor"
                 defaultValue={articleData.articleAuthor}
                 onChange={handleInputChange}
@@ -160,6 +166,7 @@ const UpdateArticle = () => {
                 id="articleDescription"
                 className="form-control"
                 name="articleDescription"
+                placeholder="Description 01"
                 defaultValue={articleData.articleDescription}
                 onChange={handleInputChange}
                 rows="4"
@@ -179,6 +186,7 @@ const UpdateArticle = () => {
                 id="articleContent"
                 className="form-control"
                 name="articleContent"
+                placeholder="content new"
                 defaultValue={articleData.articleContent}
                 onChange={handleInputChange}
                 rows="4"
@@ -198,6 +206,7 @@ const UpdateArticle = () => {
                 type="date"
                 id="dateOfPublication"
                 className="form-control"
+                placeholder=""
                 name="dateOfPublication"
                 defaultValue={articleData.dateOfPublication}
                 onChange={handleInputChange}
@@ -216,6 +225,7 @@ const UpdateArticle = () => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 
