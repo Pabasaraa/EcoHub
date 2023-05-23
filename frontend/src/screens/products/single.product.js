@@ -124,7 +124,7 @@ const SingleProduct = () => {
   };
 
   return (
-    <>
+    <div data-testid="single-product">
       {product ? (
         <div className="container">
           <div className="row mt-3">
@@ -136,7 +136,9 @@ const SingleProduct = () => {
               />
             </div>
             <div className={`col-8 ${styles.productDetailSection}`}>
-              <h2 style={{ marginBottom: "0" }}>{product.productName}</h2>
+              <h2 style={{ marginBottom: "0" }} data-testid="product-name">
+                {product.productName}
+              </h2>
               <p
                 className="text-muted mt-1 mb-1"
                 style={{ fontSize: "0.9rem" }}
@@ -367,7 +369,7 @@ const SingleProduct = () => {
       ) : (
         <Loader />
       )}
-    </>
+    </div>
   );
 };
 
