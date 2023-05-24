@@ -12,27 +12,26 @@ const ArticleList = () => {
 
   const navigate = useNavigate();
 
-  const retrieveItems = () => {
+  const retrieveArticles = async () => {
+
     axios
       .get(`http://localhost:8000/articles/get/all`)
       .then((res) => {
-        setArticles(res.data.data);
-      })
-      .catch((error) => {
-        console.error(error);
+        console.log(res.data.data);
+        if (res.data.data) {
+          setArticles(res.data.data);
+        }
       });
-  };
+   };
 
   useEffect(() => {
-    retrieveItems();
+    retrieveArticles();
   }, []);
-
- 
 
   const onDelete = (id) => {
     axios.delete(`http://localhost:8000/articles/delete/${id}`).then(() => {
       alert("Delete Successfully");
-      this.retrieveItems();
+      retrieveArticles();
     });
   };
 
@@ -57,8 +56,10 @@ const ArticleList = () => {
   return (
     <>
       <div className="container">
-        <h2 className="text-center mt-5 mb-3">List of Articles</h2>
-
+        <h1 className="text-center mt-5 mb-3" style={{color:"black",textShadow:"0 0 5px white"}}>Articles</h1>
+ <br></br>
+  <hr></hr>
+  <br></br>
         <InputGroup className={styles.searchBar}>
           <FormControl
             className={styles.searchInput}
@@ -76,57 +77,60 @@ const ArticleList = () => {
             Search
           </Button>
         </InputGroup>
+  
+        <br />
+      <br />
 
-        
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">adminId</th>
-              <th scope="col">articleTitle</th>
-              <th scope="col">articleAuthor</th>
-              <th scope="col">articleDescription</th>
-              <th scope="col">articleContent</th>
-              <th scope="col">dateOfPublication</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.articles &&
-              this.state.articles.map((articles, index) => (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{articles.adminId}</td>
-                  <td>{articles.articleTitle}</td>
-                  <td>{articles.articleAuthor}</td>
-                  <td>
-                    {" "}
+      <div className="row">
+        {articles &&
+          articles.map((articles, index) => (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className={styles.card}>
+                <div className="card-body">
+                  
+
+                  <h2 className="card-title" style={{color:"white",textShadow:"1px 1px 2px black, 0 0 25px black, 0 0 5px darkblue"}}>{articles.articleTitle}</h2>
+                  <br></br>
+                  <br></br>
+                  <h4 className="card-text" style={{color:"#515c70"}}>Author:  {articles.articleAuthor}</h4>
+                  <h4 className="card-text">
+                    {articles.articleDescription.length > 200
+                      ? articles.articleDescription.slice(0, 200) + "..."
+                      : articles.articleDescription}
+                  </h4>
+                  <br></br>
+                  <p className="card-text">
                     {articles.articleContent.length > 500
                       ? articles.articleContent.slice(0, 500) + "..."
                       : articles.articleContent}
-                  </td>
-                 
-                  <td>
+                  </p>
+                  <br></br>
+                  <h4 className="card-text">Publication: {articles.dateOfPublication}</h4>
+                  <br></br>
+                  <div className="d-flex justify-content-between">
                     <a
                       className="btn btn-warning"
-                      onClick={() => navigate(`update/${articles._id}`)}
+                      href={`/updateArticle/${articles._id}`}
                     >
                       <i className="fas fa-edit"></i>&nbsp; Edit
                     </a>
-                    &nbsp;
                     <a
                       className="btn btn-danger"
                       onClick={() => onDelete(articles._id)}
                     >
                       <i className="far fa-trash-alt"></i>&nbsp; Delete
                     </a>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
+    </div>
+      
     </>
   );
+  
 };
 
 export default ArticleList;

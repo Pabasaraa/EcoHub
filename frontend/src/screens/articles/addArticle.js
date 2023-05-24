@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import styles from "./styles/add.article.module.css";
-import image from "./styles/img/background.jpg"
+import image from "./styles/img/background1.png"
 
 
 const AddArticles = () => {
@@ -65,15 +65,18 @@ const AddArticles = () => {
   };
 
   return (
-    <div className="container" style={{backgroundImage:`url(${image})`, backgroundRepeat:"no-repeat" }}>
-    <section className="container py-5 h-100">
-     
-      <div className="row d-flex h-100">
-        <div className="card-body text-center">
+    
+    <div style={{ backgroundImage:`url(${image})`, backgroundRepeat:"no-repeat", minHeight: "100vh",marginTop:"50px",alt:" " }}>
+      <div className="row d-flex justify-content-center align-items-center h-100">
+      <div className="col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-6 offset-xl-3">
+        <div div className="card shadow-2-strong" style={{ borderRadius: "10px", borderColor: "white", boxShadow: "rgba(99, 99, 99, 0.2) 0px 4px 10px 0px",marginTop:"150px",marginBottom:"150px",marginLeft:"80px" }}>
+          <div className="card-body p-5 text-center">
           <form onSubmit={handleSubmit}>
-            <h2 className="mb-4">Add New Article</h2>
+            <h1 className="mb-4" style={{color:"white",textShadow:"1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue"}}> New Article</h1>
             <hr className="mb-4" style={{ opacity: "0.15" }} />
 
+      <div className="row">
+    <div className="col">
             <div className="form-group mb-4">
               <label
                 htmlFor="role"
@@ -92,14 +95,15 @@ const AddArticles = () => {
                 required
               />
             </div>
-
+            </div>
+            <div className="col">
             <div className="form-group mb-4">
               <label
                 htmlFor="adminId"
                 className="mb-2 text-muted"
                 style={{ float: "left" }}
               >
-                admin ID:
+                Admin ID:
               </label>
               <input
                 type="text"
@@ -110,6 +114,8 @@ const AddArticles = () => {
                 onChange={handleInputChange}
                 required
               />
+            </div>
+           </div>
             </div>
 
             <div className="form-group mb-4">
@@ -210,14 +216,13 @@ const AddArticles = () => {
             <hr className="mt-4 mb-3" style={{ opacity: "0.15" }} />
 
             <button className={styles.btn} type="submit">
-              Add
+              Save
             </button>
           </form>
         </div>
       </div>
-     
-     
-    </section>
+    </div>
+    </div>
     </div>
   );
 };

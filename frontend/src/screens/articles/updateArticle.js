@@ -2,45 +2,40 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import styles from "./styles/add.article.module.css";
-import image from "./styles/img/background.jpg"
-
-const UpdateArticle = () => {
+const UpdateArticles = () => {
   const [articleData, setArticleData] = useState({});
+ 
 
   const navigate = useNavigate("");
   const params = useParams();
 
+  const getArticlesById = async () => {
+    const res = await axios.get(`http://localhost:8000/articles/${params.id}`);
+
+    setArticleData(res.data.data);
+  };
+
   useEffect(() => {
-    const getdata = async () => {
-      const res = await axios.get(
-        `http://localhost:8000/articles/${params.id}`
-      );
-      setArticleData(res.data.data);
-    };
-    getdata();
+    getArticlesById();
   }, []);
 
-
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setArticleData((previous) => {
-      return {
-        ...previous,
-        [name]: value,
-      };
-    });
+    setArticleData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
   };
-
-
-  const updateItem = async (e) => {
+  
+  const updateArticle = async (e) => {
     e.preventDefault();
 
     console.log(articleData);
 
     const formData = new FormData();
-    formData.append("token", localStorage.getItem("token"));
+    // formData.append("token", localStorage.getArticle("token"));
     formData.append("role", articleData.role);
     formData.append("adminId", articleData.adminId);
     formData.append("articleTitle", articleData.articleTitle);
@@ -48,185 +43,135 @@ const UpdateArticle = () => {
     formData.append("articleDescription", articleData.articleDescription);
     formData.append("articleContent", articleData.articleContent);
     formData.append("dateOfPublication", articleData.dateOfPublication);
+
    
+
     await axios
       .put(`http://localhost:8000/articles/update/${params.id}`, formData)
       .then((res) => {
         console.log(res);
-        alert("Article Updated Successfully");
+        alert("article Updated Successfully");
         navigate("/articleList");
       })
       .catch((err) => {
         console.log(err);
-        alert("Article Update Failed!");
+        alert("article Update Failed. Check console for more details");
       });
   };
 
   return (
-    <div className="container" style={{backgroundImage:`url(${image})`, backgroundRepeat:"no-repeat" }}>
-    <section className="container py-5 h-100">
-      <div className="row d-flex h-100">
-        <div className="card-body text-center">
-          <form onSubmit={updateItem}>
-            <h2 className="mb-4">Update Article</h2>
-            <hr className="mb-4" style={{ opacity: "0.15" }} />
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="role"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                Role:
-              </label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                className="form-control"
-                placeholder="admin"
-                defaultValue={articleData.role}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="adminId"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                admin ID:
-              </label>
-              <input
-                type="text"
-                id="adminId"
-                name="adminId"
-                className="form-control"
-                placeholder="0123"
-                defaultValue={articleData.adminId}
-                onChange={handleInputChange}
-                required
-                disabled
-              />
-            </div>
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="articleTitle"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                Article Title:
-              </label>
-              <input
-                type="text"
-                id="articleTitle"
-                name="articleTitle"
-                className="form-control"
-                placeholder="New Title1"
-                defaultValue={articleData.articleTitle}
-                onChange={handleInputChange}
-                required
-                disabled
-              />
-            </div>
-
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="articleAuthor"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                Author of the Article:
-              </label>
-              <input
-                type="text"
-                id="articleAuthor"
-                className="form-control"
-                placeholder="Mr.Perera"
-                name="articleAuthor"
-                defaultValue={articleData.articleAuthor}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="articleDescription"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-               Article Description:
-              </label>
-              <textarea
-                id="articleDescription"
-                className="form-control"
-                name="articleDescription"
-                placeholder="Description 01"
-                defaultValue={articleData.articleDescription}
-                onChange={handleInputChange}
-                rows="4"
-                required
-              ></textarea>
-            </div>
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="articleContent"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-               Article Content:
-              </label>
-              <textarea
-                id="articleContent"
-                className="form-control"
-                name="articleContent"
-                placeholder="content new"
-                defaultValue={articleData.articleContent}
-                onChange={handleInputChange}
-                rows="4"
-                required
-              ></textarea>
-            </div>
-
-            <div className="form-group mb-4">
-              <label
-                htmlFor="dateOfPublication"
-                className="mb-2 text-muted"
-                style={{ float: "left" }}
-              >
-                Date of Publication:
-              </label>
-              <input
-                type="date"
-                id="dateOfPublication"
-                className="form-control"
-                placeholder=""
-                name="dateOfPublication"
-                defaultValue={articleData.dateOfPublication}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-          
-
-            <hr className="mt-4 mb-3" style={{ opacity: "0.15" }} />
-
-            <button className={styles.btn} type="submit">
-              Update
-            </button>
-          </form>
+    <div className="container" style={{ background: "#f8f9fa", padding: "20px" }}>
+    <h2 className="h-tag" style={{ color: "#333", marginBottom: "20px" }}>
+      <i class="fa-solid fa-pen-to-square"></i> Edit Article
+    </h2>
+    <div className="input-form">
+      <form className="forms" noValidate>
+      <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Role:</label>
+          <br />
+          <input
+            type="text"
+            className="form-control"
+            name="role"
+            placeholder="admin"
+            defaultValue={articleData.role}
+            onChange={handleInputChange}
+            disabled
+          />
         </div>
-      </div>
-    </section>
+        <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Admin ID:</label>
+          <br />
+          <input
+            type="text"
+            className="form-control"
+            name="adminId"
+            placeholder="Enter Admin ID"
+            defaultValue={articleData.adminId}
+            onChange={handleInputChange}
+            disabled
+          />
+        </div>
+  
+        <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Article Title:</label>
+          <br />
+          <input
+            type="text"
+            className="form-control"
+            name="articleTitle"
+            placeholder="Enter the Title"
+            defaultValue={articleData.articleTitle}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Article Author:</label>
+          <br />
+          <input
+            type="text"
+            className="form-control"
+            name="articleAuthor"
+            placeholder="Enter the Title"
+            defaultValue={articleData.articleAuthor}
+            onChange={handleInputChange}
+          />
+        </div>
+  
+  
+        <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Article Description:</label>
+          <br />
+          <input
+            type="text"
+            className="form-control"
+            name="articleDescription"
+            placeholder="Enter Article Description"
+            defaultValue={articleData.articleDescription}
+            onChange={handleInputChange}
+          />
+        </div>
+  
+        <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Article Content:</label>
+          <br />
+          <input
+            type="text"
+            className="form-control"
+            name="articleContent"
+            placeholder="Enter article Content"
+            defaultValue={articleData.articleContent}
+            onChange={handleInputChange}
+          />
+        </div>
+  
+        <div className="form-group" style={{ marginBottom: "15px" }}>
+          <label style={{ marginBottom: "5px", color: "#555" }}>Date Of Publication:</label>
+          <br />
+          <input
+            type="date"
+            className="form-control"
+            name="dateOfPublication"
+            placeholder="Enter the Date"
+            defaultValue={articleData.dateOfPublication}
+            onChange={handleInputChange}
+          />
+        </div>
+  
+        <button
+          className="btn btn-success"
+          type="submit"
+          style={{ marginTop: "15px" }}
+          onClick={updateArticle}
+        >
+          <i className="far fa-check-square"></i>&nbsp;Save
+        </button>
+      </form>
     </div>
+  </div>
+  
   );
 };
 
-export default UpdateArticle;
+export default UpdateArticles;
