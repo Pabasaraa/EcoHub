@@ -16,7 +16,7 @@ import Dashboard from "./screens/admin-dashboard/dashboard";
 import AddArticles from "./screens/articles/addArticle";
 import ArticleList from "./screens/articles/articleList";
 import UpdateArticle from "./screens/articles/updateArticle";
-// import ContactForm from "./screens/contactUs/contactForm";
+import ContactForm from "./screens/contactUs/contactForm";
 
 function App() {
   return (
@@ -36,7 +36,7 @@ function App() {
           <Route path="/addArticle" element={<AddArticles />} />
           <Route path="/articleList" element={<ArticleList />} />
           <Route path="/updateArticle/:id" element={<UpdateArticle />} />
-          {/* <Route path="/contactForm" element={<ContactForm />} /> */}
+          <Route path="/contactForm" element={<ContactForm />} />
           
         </Routes>
       </div>
