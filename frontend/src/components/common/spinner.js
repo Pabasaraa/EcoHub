@@ -8,8 +8,9 @@ const Loader = () => {
         display: "flex",
         justifyContent: "center",
         marginTop: "5rem",
-        height: "100vh",
+        height: "fit-content",
       }}
+      data-testid="loader"
     >
       <Spinner
         animation="border"

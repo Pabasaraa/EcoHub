@@ -76,7 +76,7 @@ const AllProducts = () => {
   };
 
   return (
-    <div>
+    <div data-testid="all-products">
       <div className={styles.container} style={{ padding: "0 60px" }}>
         <InputGroup className={styles.searchBar}>
           <FormControl
@@ -130,6 +130,7 @@ const AllProducts = () => {
                 onClick={() => navigate(`/products/${product._id}`)}
                 style={{ cursor: "pointer" }}
                 className={styles.productCard}
+                data-testid={`product-card-${key + 1}`}
               >
                 <MDBCardImage
                   src={base64Strings[key]}

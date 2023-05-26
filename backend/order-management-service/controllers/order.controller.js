@@ -87,7 +87,7 @@ const getAllOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
   try {
-    const orderId = req.params.orderId;
+    const orderId = req.params.id;
     const order = await orderService.getOrderById(orderId);
 
     if (order) {
@@ -106,7 +106,7 @@ const getOrderById = async (req, res) => {
 
 const getOrdersByUserId = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.id;
 
     const orders = await orderService.getOrdersByUserId(userId);
 
@@ -126,7 +126,7 @@ const getOrdersByUserId = async (req, res) => {
 
 const updateOrder = async (req, res) => {
   try {
-    const orderId = req.params.orderId;
+    const orderId = req.params.id;
     const updates = req.body;
     const updatedOrder = await orderService.updateOrder(orderId, updates);
     if (updatedOrder) {
@@ -141,7 +141,7 @@ const updateOrder = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
   try {
-    const orderId = req.params.orderId;
+    const orderId = req.params.id;
     const deletedOrder = await orderService.deleteOrder(orderId);
     if (deletedOrder) {
       res.status(200).json(deletedOrder);
@@ -155,7 +155,7 @@ const deleteOrder = async (req, res) => {
 
 const verifyOrder = async (req, res) => {
   try {
-    const orderId = req.params.orderId;
+    const orderId = req.params.id;
     const order = await orderService.getOrderById(orderId);
     if (order) {
       const verifiedOrder = await axios.patch(

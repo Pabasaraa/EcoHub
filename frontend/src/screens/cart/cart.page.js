@@ -260,7 +260,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" data-testid="cart-id">
       {cartItems.length !== 0 ? (
         <div className="row">
           <h3 className="mt-3">
