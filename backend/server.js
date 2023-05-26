@@ -10,6 +10,7 @@ import userRoutes from "./user-management-service/routes/user.route.js";
 import seminarRoutes from "./seminar-management/routes/seminar.route.js";
 import OrderRoutes from "./order-management-service/routes/order.route.js";
 import ReviewRouter from "./review-management-service/routes/review.route.js";
+import ArticleRoutes from "./article-management-service/routes/article.route.js";
 
 // Load environment variables from .env file to the process.env object
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/users", userRoutes);
 app.use("/seminars", seminarRoutes);
 app.use("/orders", OrderRoutes);
 app.use("/reviews", ReviewRouter);
+app.use("/articles", ArticleRoutes);
 
 // Connect to the database
 connectDB();
