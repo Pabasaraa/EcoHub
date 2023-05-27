@@ -23,7 +23,15 @@ const Dashboard = () => {
 
       <Container className={styles.content}>
         <Routes>
-          <Route path="/" element={<h1>Welcome to the Dashboard</h1>} />
+          <Route
+            path="/"
+            element={
+              <div className="text-center mt-5">
+                <h1>Select the page you want to access!</h1>
+                <p>Use the right side nav</p>
+              </div>
+            }
+          />
 
           <Route path="products/add" element={<AddProducts />} />
           <Route path="products" element={<ListProducts />} />

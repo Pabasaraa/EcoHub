@@ -51,7 +51,7 @@ const AddProducts = () => {
     }
 
     axios
-      .post("http://localhost:8000/products/new", formData)
+      .post("https://ecohub-backend.onrender.com/products/new", formData)
       .then((response) => {
         console.log(response);
         navigate("/products");

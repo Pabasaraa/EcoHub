@@ -14,7 +14,7 @@ const AddSeminar = () => {
       navigate(`/login?redirect=${window.location.pathname}`);
     } else {
       const response = await axios.post(
-        "http://localhost:8000/users/validatetoken",
+        "https://ecohub-backend.onrender.com/users/validatetoken",
         {},
         {
           headers: {
@@ -62,7 +62,7 @@ const AddSeminar = () => {
     };
 
     axios
-      .post("http://localhost:8000/seminars/new", seminar)
+      .post("https://ecohub-backend.onrender.com/seminars/new", seminar)
       .then(() => {
         alert("Add item successful!");
         navigate("/seminars");

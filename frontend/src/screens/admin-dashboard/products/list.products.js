@@ -18,7 +18,7 @@ const ListProducts = () => {
 
   const retrieveItems = () => {
     axios
-      .get(`http://localhost:8000/products/get/all`)
+      .get(`https://ecohub-backend.onrender.com/products/get/all`)
       .then((res) => {
         setItems(res.data.data);
       })
@@ -49,10 +49,12 @@ const ListProducts = () => {
   }, [imageBuffers]);
 
   const onDelete = (id) => {
-    axios.delete(`http://localhost:8000/products/delete/${id}`).then(() => {
-      alert("Delete Successfully");
-      retrieveItems();
-    });
+    axios
+      .delete(`https://ecohub-backend.onrender.com/products/delete/${id}`)
+      .then(() => {
+        alert("Delete Successfully");
+        retrieveItems();
+      });
   };
 
   const handleSearchChange = (e) => {
@@ -62,7 +64,7 @@ const ListProducts = () => {
   const searchProducts = () => {
     setItems([]);
     axios
-      .post("http://localhost:8000/products/search", {
+      .post("https://ecohub-backend.onrender.com/products/search", {
         searchTerm: searchTerm,
       })
       .then((res) => {

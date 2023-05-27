@@ -58,7 +58,7 @@ const ManageCard = () => {
 
   const retriveSeminar = () => {
     axios
-      .get("http://localhost:8000/seminars/get/all")
+      .get("https://ecohub-backend.onrender.com/seminars/get/all")
       .then((res) => {
         setSeminars(res.data.data);
         console.log(res.data.data);
@@ -73,10 +73,12 @@ const ManageCard = () => {
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8000/seminars/delete/${id}`).then((res) => {
-      alert("delete");
-      retriveSeminar();
-    });
+    axios
+      .delete(`https://ecohub-backend.onrender.com/seminars/delete/${id}`)
+      .then((res) => {
+        alert("delete");
+        retriveSeminar();
+      });
   };
   return (
     <>
