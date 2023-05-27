@@ -12,7 +12,9 @@ const UpdateSeminar = () => {
   const params = useParams();
 
   const getdata = async () => {
-    const res = await axios.get(`http://localhost:8000/seminars/${params.id}`);
+    const res = await axios.get(
+      `https://ecohub-backend.onrender.com/seminars/${params.id}`
+    );
 
     setSeminarData(res.data.data);
   };
@@ -59,7 +61,10 @@ const UpdateSeminar = () => {
     // }
 
     await axios
-      .put(`http://localhost:8000/seminars/update/${params.id}`, seminar)
+      .put(
+        `https://ecohub-backend.onrender.com/seminars/update/${params.id}`,
+        seminar
+      )
       .then((res) => {
         console.log(res);
         alert("Item Updated Successfully");

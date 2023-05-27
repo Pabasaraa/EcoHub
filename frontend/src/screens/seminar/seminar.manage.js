@@ -46,7 +46,7 @@ const SeminarManage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/seminars/get/all")
+      .get("https://ecohub-backend.onrender.com/seminars/get/all")
       .then((res) => {
         setSeminars(res.data.data);
         console.log(res.data.data);
@@ -62,7 +62,7 @@ const SeminarManage = () => {
 
   const searchProducts = () => {
     axios
-      .post("http://localhost:8000/seminar/search", {
+      .post("https://ecohub-backend.onrender.com/seminar/search", {
         searchTerm: searchTerm,
       })
       .then((res) => {

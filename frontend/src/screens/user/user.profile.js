@@ -25,7 +25,7 @@ const Profile = () => {
     //send axios request to server to validate token with custom header
     axios
       .post(
-        "http://localhost:8000/users/validatetoken",
+        "https://ecohub-backend.onrender.com/users/validatetoken",
         {},
         {
           headers: {
@@ -43,13 +43,15 @@ const Profile = () => {
   }
 
   const getUser = async (_id) => {
-    const user = await axios.get(`http://localhost:8000/users/${_id}`);
+    const user = await axios.get(
+      `https://ecohub-backend.onrender.com/users/${_id}`
+    );
     setUser(user.data);
   };
 
   const fetchOrders = async () => {
     const allOrders = await axios.get(
-      `http://localhost:8000/orders/user/${user._id}`
+      `https://ecohub-backend.onrender.com/orders/user/${user._id}`
     );
 
     console.log(allOrders.data.data);
@@ -71,7 +73,7 @@ const Profile = () => {
 
   const deleteUser = () => {
     axios
-      .delete("http://localhost:8000/users/delete", {
+      .delete("https://ecohub-backend.onrender.com/users/delete", {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },

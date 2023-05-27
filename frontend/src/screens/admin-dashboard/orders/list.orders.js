@@ -10,7 +10,7 @@ function OrdersList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/orders")
+      .get("https://ecohub-backend.onrender.com/orders")
       .then((response) => {
         setOrders(response.data.data);
         console.log(response.data.data);

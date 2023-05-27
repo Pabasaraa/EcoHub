@@ -24,7 +24,7 @@ const Register = () => {
     console.log(formData);
 
     axios
-      .post("http://localhost:8000/users/register", formData)
+      .post("https://ecohub-backend.onrender.com/users/register", formData)
       .then(() => {
         alert("Registration successful!");
         navigate("/login");

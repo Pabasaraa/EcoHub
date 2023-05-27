@@ -22,7 +22,7 @@ const Login = () => {
 
     axios
       .post(
-        "http://localhost:8000/users/validatetoken",
+        "https://ecohub-backend.onrender.com/users/validatetoken",
         {},
         {
           headers: {
@@ -61,7 +61,7 @@ const Login = () => {
     };
 
     axios
-      .post("http://localhost:8000/users/login", user)
+      .post("https://ecohub-backend.onrender.com/users/login", user)
       .then((response) => {
         alert("Login successful!");
 

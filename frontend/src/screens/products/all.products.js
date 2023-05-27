@@ -27,7 +27,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/products/get/all")
+      .get("https://ecohub-backend.onrender.com/products/get/all")
       .then((res) => {
         setProducts(res.data.data);
         console.log(res.data.data);
@@ -64,7 +64,7 @@ const AllProducts = () => {
 
   const searchProducts = () => {
     axios
-      .post("http://localhost:8000/products/search", {
+      .post("https://ecohub-backend.onrender.com/products/search", {
         searchTerm: searchTerm,
       })
       .then((res) => {

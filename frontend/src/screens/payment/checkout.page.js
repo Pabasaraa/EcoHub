@@ -51,13 +51,15 @@ const Checkout = () => {
 
     alert("processing Payment! Please Wait...");
 
-    await axios.post("http://localhost:8000/orders/new", orderData).then(() => {
-      localStorage.removeItem("cartItems");
-      localStorage.removeItem("transactionDetails");
+    await axios
+      .post("https://ecohub-backend.onrender.com/orders/new", orderData)
+      .then(() => {
+        localStorage.removeItem("cartItems");
+        localStorage.removeItem("transactionDetails");
 
-      alert("Order Placed Successfully");
-      navigate("/products");
-    });
+        alert("Order Placed Successfully");
+        navigate("/products");
+      });
   };
 
   return (

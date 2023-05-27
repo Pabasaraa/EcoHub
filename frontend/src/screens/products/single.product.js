@@ -20,7 +20,7 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       axios
-        .get(`http://localhost:8000/products/${params.id}`)
+        .get(`https://ecohub-backend.onrender.com/products/${params.id}`)
         .then((response) => {
           setProduct(response.data.data);
           const binary = Array.from(
@@ -40,7 +40,7 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       const reviews = await axios.get(
-        `http://localhost:8000/reviews/${product._id}`
+        `https://ecohub-backend.onrender.com/reviews/${product._id}`
       );
       setReviews(reviews.data.data);
     };
@@ -111,7 +111,7 @@ const SingleProduct = () => {
     };
 
     axios
-      .post("http://localhost:8000/reviews/new", review)
+      .post("https://ecohub-backend.onrender.com/reviews/new", review)
       .then((response) => {
         alert("Review submitted successfully!");
         setReviews([...reviews, response.data.data]);

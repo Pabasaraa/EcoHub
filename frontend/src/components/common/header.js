@@ -21,7 +21,7 @@ function NavBar() {
 
       axios
         .post(
-          "http://localhost:8000/users/validatetoken",
+          "https://ecohub-backend.onrender.com/users/validatetoken",
           {},
           {
             headers: {

@@ -14,7 +14,7 @@ const UpdateProduct = () => {
   useEffect(() => {
     const getdata = async () => {
       const res = await axios.get(
-        `http://localhost:8000/products/${params.id}`
+        `https://ecohub-backend.onrender.com/products/${params.id}`
       );
       setProductData(res.data.data);
     };
@@ -59,7 +59,10 @@ const UpdateProduct = () => {
     }
 
     await axios
-      .put(`http://localhost:8000/products/update/${params.id}`, formData)
+      .put(
+        `https://ecohub-backend.onrender.com/products/update/${params.id}`,
+        formData
+      )
       .then((res) => {
         console.log(res);
         alert("Item Updated Successfully");
