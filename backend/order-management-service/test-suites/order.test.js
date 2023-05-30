@@ -39,7 +39,7 @@ describe("Order Service", () => {
 
   // Test case for getting an order by ID
   it("should retrieve an order by ID", async () => {
-    const orderId = "64574347ff4740fd97830c9a";
+    const orderId = "647199b95a59bfa7ba52080b";
     const response = await request(app).get(`/orders/${orderId}`);
 
     expect(response.status).toBe(200);
@@ -49,7 +49,7 @@ describe("Order Service", () => {
 
   // Test case for updating an order
   it("should update an existing order", async () => {
-    const orderId = "64574347ff4740fd97830c9a";
+    const orderId = "647199b95a59bfa7ba52080b";
     const updates = {
       shippingOption: "Express",
     };
@@ -63,7 +63,7 @@ describe("Order Service", () => {
 
   // Test case for deleting an order
   it("should delete an existing order", async () => {
-    const orderId = "64574347ff4740fd97830c9a";
+    const orderId = "647199b95a59bfa7ba52080b";
 
     const response = await request(app).delete(`/orders/${orderId}`);
 
